@@ -5,5 +5,4 @@ from . import models
 admin.site.register(models.Movie)
 admin.site.register(models.GameMovie)
 admin.site.register(models.Genre)
-admin.site.register(models.MovieAndGenre)
-admin.site.register(models.GameMovieAndGenre)
+admin.site.register(models.GameQuestion)
