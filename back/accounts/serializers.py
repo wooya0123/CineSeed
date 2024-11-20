@@ -6,9 +6,11 @@ from rest_framework import serializers
 from .models import User
 from django.contrib.auth import get_user_model
 
+
 UserModel = get_user_model()
 
 class CustomRegisterSerializer(RegisterSerializer):
+    genre = serializers.PrimaryKeyRelatedField(read_only=True, default=None)
     nickname = serializers.CharField(max_length=100, required=True)
     role = serializers.ChoiceField(choices=User.Role.choices, required=True)
     introduction = serializers.CharField(required=False, allow_blank=True)
@@ -17,38 +19,39 @@ class CustomRegisterSerializer(RegisterSerializer):
     etc = serializers.CharField(max_length=250, required=False, allow_blank=True)
 
     def get_cleaned_data(self):
-        data = super().get_cleaned_data()
-        data['nickname'] = self.validated_data.get('nickname', '')
-        data['role'] = self.validated_data.get('role', User.Role.UNDEFINED)
-        data['introduction'] = self.validated_data.get('introduction', '')
-        data['profile_image'] = self.validated_data.get('profile_image', None)
-        data['instagram'] = self.validated_data.get('instagram', '')
-        data['etc'] = self.validated_data.get('etc', '')
+        data = super().get_cleaned_data()   # 기본 username, password, email 불러오기
+        data.update({
+            'nickname': self.validated_data.get('nickname', ''),
+            'role': self.validated_data.get('role', UserModel.Role.UNDEFINED),
+            'introduction': self.validated_data.get('introduction', ''),
+            'profile_image': self.validated_data.get('profile_image', None),
+            'instagram': self.validated_data.get('instagram', ''),
+            'etc': self.validated_data.get('etc', '')
+        })
         return data
 
     def save(self, request):
         adapter = get_adapter()
         user = adapter.new_user(request)
-        self.cleaned_data = self.get_cleaned_data()
+        self.cleaned_data = self.get_cleaned_data()     # 커스텀한 필드들이 포함된 객체
 
-        # 기본 필드 설정
+        # user 객체에 기본 필드 설정
         user.username = self.cleaned_data.get('username')
         user.email = self.cleaned_data.get('email')
         user.set_password(self.cleaned_data.get('password1'))
 
-        # 커스텀 필드 설정
-        user.nickname = self.cleaned_data.get('nickname')
-        user.role = self.cleaned_data.get('role')
-        user.introduction = self.cleaned_data.get('introduction')
-        user.profile_image = self.cleaned_data.get('profile_image')
-        user.instagram = self.cleaned_data.get('instagram')
-        user.etc = self.cleaned_data.get('etc')
-        user.save()
-        setup_user_email(request, user, [])
+        # 커스텀한 필드를 user 객체에 넣기
+        for key, value in self.cleaned_data.items():
+            setattr(user, key, value)
+        
+        user.save()                             # 유저 객체를 db에 저장
+        setup_user_email(request, user, [])     # 사용자 이메일 설정(이메일 확인)
         return user
+    
     
 class CustomUserDetailsSerializer(UserDetailsSerializer):
     # 커스텀 필드 명시적 선언
+    genre = serializers.PrimaryKeyRelatedField(read_only=True)
     nickname = serializers.CharField(max_length=100)
     role = serializers.ChoiceField(choices=User.Role.choices)
     introduction = serializers.CharField(allow_blank=True)
@@ -64,6 +67,7 @@ class CustomUserDetailsSerializer(UserDetailsSerializer):
             'email',
             'first_name',
             'last_name',
+            'genre',
             'nickname',
             'role',
             'introduction',
