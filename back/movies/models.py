@@ -5,9 +5,13 @@ class Genre(models.Model):
     code = models.CharField(max_length=100)
     text = models.CharField(max_length=100)
 
+def get_default_genre():
+    return Genre.objects.get_or_create(code="X", text='미정')[0].id
+
+
 class Movie(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    genre = models.ForeignKey(Genre, on_delete=models.CASCADE)
+    genre = models.ForeignKey(Genre, default=get_default_genre, on_delete=models.SET_DEFAULT)
     title = models.CharField(max_length=250)
     image = models.ImageField(blank=True, upload_to='images/')
     start_date = models.DateField()
@@ -18,7 +22,7 @@ class Movie(models.Model):
     is_appliable = models.BooleanField()
 
 class GameMovie(models.Model):
-    genre = models.ForeignKey(Genre, on_delete=models.CASCADE)
+    genre = models.ForeignKey(Genre, default=get_default_genre, on_delete=models.SET_DEFAULT)
     title = models.CharField(max_length=100)
     image = models.ImageField(blank=True, upload_to='images/')
 
