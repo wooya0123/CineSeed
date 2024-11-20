@@ -42,8 +42,8 @@ INSTALLED_APPS = [
     'django.contrib.sites',        # 등록 기능
     'allauth',
     'allauth.account',
-    # 'allauth.socialaccount',
     'dj_rest_auth.registration',
+    # 'allauth.socialaccount',
 
     'django.contrib.admin',
     'django.contrib.auth',

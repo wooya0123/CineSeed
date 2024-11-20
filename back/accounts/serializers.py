@@ -11,7 +11,6 @@ UserModel = get_user_model()
 class CustomRegisterSerializer(RegisterSerializer):
     nickname = serializers.CharField(max_length=100, required=True)
     role = serializers.ChoiceField(choices=User.Role.choices, required=True)
-    preference = serializers.CharField(max_length=250, required=False, allow_blank=True)
     introduction = serializers.CharField(required=False, allow_blank=True)
     profile_image = serializers.ImageField(required=False)       # allow_blank 제거
     instagram = serializers.URLField(required=False, allow_blank=True)
@@ -21,7 +20,6 @@ class CustomRegisterSerializer(RegisterSerializer):
         data = super().get_cleaned_data()
         data['nickname'] = self.validated_data.get('nickname', '')
         data['role'] = self.validated_data.get('role', User.Role.UNDEFINED)
-        data['preference'] = self.validated_data.get('preference', '')
         data['introduction'] = self.validated_data.get('introduction', '')
         data['profile_image'] = self.validated_data.get('profile_image', None)
         data['instagram'] = self.validated_data.get('instagram', '')
@@ -41,7 +39,6 @@ class CustomRegisterSerializer(RegisterSerializer):
         # 커스텀 필드 설정
         user.nickname = self.cleaned_data.get('nickname')
         user.role = self.cleaned_data.get('role')
-        user.preference = self.cleaned_data.get('preference')
         user.introduction = self.cleaned_data.get('introduction')
         user.profile_image = self.cleaned_data.get('profile_image')
         user.instagram = self.cleaned_data.get('instagram')
@@ -54,7 +51,6 @@ class CustomUserDetailsSerializer(UserDetailsSerializer):
     # 커스텀 필드 명시적 선언
     nickname = serializers.CharField(max_length=100)
     role = serializers.ChoiceField(choices=User.Role.choices)
-    preference = serializers.CharField(max_length=250, allow_blank=True)
     introduction = serializers.CharField(allow_blank=True)
     profile_image = serializers.ImageField(required=False, allow_null=True)
     instagram = serializers.URLField(allow_blank=True)
@@ -70,7 +66,6 @@ class CustomUserDetailsSerializer(UserDetailsSerializer):
             'last_name',
             'nickname',
             'role',
-            'preference',
             'introduction',
             'profile_image',
             'instagram',

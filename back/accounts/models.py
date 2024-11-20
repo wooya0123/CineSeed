@@ -8,8 +8,8 @@ class User(AbstractUser):
         DIRECTOR = 'DI', 'Director'
         ACTOR = 'AC', 'Actor'
         STAFF = 'ST', 'Staff'
-
-    genre = models.ForeignKey(Genre)          # 장르가 삭제되도 user는 삭제되면 안 됨  
+    
+    genre = models.ForeignKey(Genre, default=1, on_delete=models.SET_DEFAULT)          # 장르가 삭제되도 user는 삭제되면 안 됨  
     nickname = models.CharField(max_length=100)
     role = models.CharField(
         max_length=2,
