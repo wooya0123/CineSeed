@@ -2,8 +2,11 @@ from django.db import models
 from django.conf import settings
 
 class Genre(models.Model):
-    code = models.IntegerField()
+    code = models.CharField(max_length=100)
     name = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.code
 
 class Movie(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
