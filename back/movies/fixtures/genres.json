@@ -1,0 +1,66 @@
+[
+{
+    "model": "movies.genre",
+    "pk": 1,
+    "fields": {
+        "code": "A",
+        "name": "낭만적인"
+    }
+},
+{
+    "model": "movies.genre",
+    "pk": 2,
+    "fields": {
+        "code": "B",
+        "name": "감성적인"
+    }
+},
+{
+    "model": "movies.genre",
+    "pk": 3,
+    "fields": {
+        "code": "C",
+        "name": "분석적인"
+    }
+},
+{
+    "model": "movies.genre",
+    "pk": 4,
+    "fields": {
+        "code": "D",
+        "name": "유머러스한"
+    }
+},
+{
+    "model": "movies.genre",
+    "pk": 5,
+    "fields": {
+        "code": "E",
+        "name": "유머러스한"
+    }
+},
+{
+    "model": "movies.genre",
+    "pk": 6,
+    "fields": {
+        "code": "F",
+        "name": "모험적인"
+    }
+},
+{
+    "model": "movies.genre",
+    "pk": 7,
+    "fields": {
+        "code": "G",
+        "name": "환상적인"
+    }
+},
+{
+    "model": "movies.genre",
+    "pk": 8,
+    "fields": {
+        "code": "H",
+        "name": "강렬한"
+    }
+}
+]
