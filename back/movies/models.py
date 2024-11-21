@@ -5,6 +5,9 @@ class Genre(models.Model):
     code = models.CharField(max_length=100)
     name = models.CharField(max_length=100)
 
+def get_default_genre():
+    return Genre.objects.get_or_create(code="X", text='미정')[0].id
+
     def __str__(self):
         return self.code
 
@@ -27,8 +30,18 @@ class GameMovie(models.Model):
 
 class GameQuestion(models.Model):
     type = models.CharField(max_length=100)
-    question1 = models.CharField(max_length=250)
-    question2 = models.CharField(max_length=250)
-    question3 = models.CharField(max_length=250)
-    question4 = models.CharField(max_length=250)
-    question5 = models.CharField(max_length=250)
+    question1_text = models.CharField(max_length=250)
+    question1_a = models.CharField(max_length=250)
+    question1_b = models.CharField(max_length=250)
+    question2_text = models.CharField(max_length=250)
+    question2_a = models.CharField(max_length=250)
+    question2_b = models.CharField(max_length=250)
+    question3_text = models.CharField(max_length=250)
+    question3_a = models.CharField(max_length=250)
+    question3_b = models.CharField(max_length=250)
+    question4_text = models.CharField(max_length=250)
+    question4_a = models.CharField(max_length=250)
+    question4_b = models.CharField(max_length=250)
+    question5_text = models.CharField(max_length=250)
+    question5_a = models.CharField(max_length=250)
+    question5_b = models.CharField(max_length=250)
