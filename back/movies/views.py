@@ -32,7 +32,8 @@ def game_title(request):
     genre_code = game_result[1] + game_result[4:7]    # 1aaa - 2bbb 형식으로 parsing
     category_code = game_result[3] + game_result[7:]  # 1aa - 3bb 형식으로 parsing
 
-    # 사용자 답변으로 genre code, text 찾아주기
+    # 사용자 답변으로 genre code 찾아주기 -> 아래 함수에서
+    # 사용자 답변으로 genre text 찾아주기 -> genre 모델에서
     # 사용자 답변으로 분류(평론가 등) 찾아주기
 
     # request.user에 title 저장
