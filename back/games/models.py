@@ -5,7 +5,7 @@ from movies.models import Genre
 class GameMovie(models.Model):
     genre = models.ForeignKey(Genre, null=True, on_delete=models.SET_NULL)
     title = models.CharField(max_length=100)
-    image = models.CharField(max_length=250, upload_to='images/')
+    image = models.CharField(max_length=250)
 
 class GameQuestion(models.Model):
     type = models.CharField(max_length=100)
