@@ -5,7 +5,6 @@ from rest_framework import status
 from .models import Movie
 from .serializers import MovieListSerializer, MovieSerializer, MovieCreateSerializer, MovieUpdateSerializer
 
-
 # 전체 db 대상(permission은 생각해보기)
 @api_view(['GET', 'POST'])
 def movie_list(request):
@@ -26,7 +25,7 @@ def movie_list(request):
 # 단일 데이터 대상(permission은 생각해보기)
 @api_view(['GET', 'DELETE', 'PUT'])
 def movies_detail(request, movie_id):
-    movie = Movie.objects.get(pk=movie_id)
+    movie = Movie.objects.get(id=movie_id)
 
     # 단일 데이터 조회
     if request.method == 'GET':
@@ -44,3 +43,31 @@ def movies_detail(request, movie_id):
             serializer.save(user=request.user)
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+
+@api_view(['POST'])
+def likes(request, movie_id):
+    movie = Movie.objects.get(id=movie_id)
+    user = request.user
+
+    # 펀딩글의 작성자가 아닐 때
+    if movie.user != request.user.like_movies:
+        # 해당 영화가 유저의 좋아요한 영화에 포함되어 있다면
+        if movie in request.user.like_movies.all():
+            movie.like_users.remove(user)
+            message = '좋아요 취소'
+            is_liked = False
+        else:
+            movie.like_users.add(user)
+            message = '좋아요 추가'
+            is_liked = True
+        
+        result = {
+            'message': message,
+            'is_liked': is_liked
+        }
+        return Response(result)
+    return Response({'error': '본인이 작성한 글에는 좋아요를 할 수 없습니다.'}, status=status.HTTP_400_BAD_REQUEST)
+
+
+
