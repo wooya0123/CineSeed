@@ -80,11 +80,12 @@ def funds(request, movie_id):
     movie = Movie.objects.get(id=movie_id)
     funding = int(request.data.get('cash'))
 
-    # 유저의 cash가 0이상일 때 해당 금액 만큼 cash 감소, movie의 펀딩 금액은 증가
+    # 유저의 cash가 펀딩할 금액 이상일 때 해당 금액 만큼 cash 감소
     if user.cash >= funding:
         user.cash -= funding
         user.save()
         
+        # 펀딩 금액만큼 영화 후원 총액 증가
         fund_movie = FundMovie.objects.get_or_create(user=user, movie=movie, defaults={'amount': 0})
         print(fund_movie)
         fund_movie = fund_movie[0]
