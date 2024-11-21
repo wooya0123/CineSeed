@@ -6,7 +6,7 @@ from rest_framework.response import Response
 
 from .models import GameQuestion, GameMovie
 from movies.models import Genre, Movie
-from .serializers import GameQuestionSerializer
+from .serializers import GameQuestionSerializer, GameMovieSerializer
 
 # Permission Decorators
 from rest_framework.decorators import permission_classes
@@ -53,11 +53,18 @@ def game_title(request):
     # request.user에 title 저장 
     title = genre_name + ' ' + category_name
     request.user.title = title
+
     # request.user에 genre 객체 값 저장
     request.user.genre = user_genre
     request.user.save()
 
     # STEP 2. 게임 영화 DB 넘겨주기
+    user_like_movie = list(GameMovie.objects.filter(genre=request.user.genre))  # 사용자 선호 장르의 영화들을 DB에서 가져오기
+    game_movie_list = random.sample(user_like_movie, 10)    # 10개의 영화를 랜덤으로 고르기
+
+    serializer = GameMovieSerializer(game_movie_list, many=True)
+
+    return Response(serializer.data)
 
 def find_genre(genre_code):
     # return 값 : code
@@ -106,6 +113,7 @@ def find_category(category_code):
 
 @api_view(['POST'])
 def set_game_movie_data(request):
+    page = int(request.POST.get('page'))                # page body로 받기
     # TMDB의 genre_id와 우리 장르 분류 관계를 저장한 dict 만들기
     convert_genre = {
         '28' : 'H', # 액션 H
@@ -128,38 +136,66 @@ def set_game_movie_data(request):
         '10752' : 'H', # 전쟁 H
         '37' : 'H', # 서부 H
     }
-    # 영화 이미지 url 앞에 부분
-    base_url = "https://image.tmdb.org/t/p/original"
-    
-    # api에 요청해서 정보 가져오기
+    base_url = "https://image.tmdb.org/t/p/original"    # 영화 이미지 url 앞에 부분
     api_key = settings.API_KEY
-    url = 'https://api.themoviedb.org/3/movie/top_rated'
-    headers = {
-        'Authorization': f'Bearer {api_key}'
-    }
-    params = {
-        "api_key": api_key,
-        "language": 'ko-KR',
-        "region": 'KR',
-        "page": 1,
-    }
-    response = requests.get(url, headers=headers, params=params).json()
 
-    # response에 들어있는 영화를 순회
-    for movie in response.get('results'):
-        # GameMovie에 들어갈 정보들을 변수에 저장
-        title = movie.get('title')
-        poster_path = movie.get('poster_path')
-        genre_id = movie.get('genre_ids')[0]
+    # api에 요청해서 정보 가져오기 : vote_count 많은 순, 한국에서 볼 수 있는 작품(스트리밍 서비스에서), 장르별로 20개씩 데이터베이스에 저장
+    genre_types = list(convert_genre.keys())
+    genre_types.remove('37')    # 서부 카테고리 받지 않음
+    genre_types.remove('10770') # TV 영화 카테고리 받지 않음
 
-        # genre_id를 '우리가 정의한 장르'와 매칭시키기
-        genre_id = convert_genre.get(str(genre_id))
+    for genre in genre_types:
+        # 제작 국가 상관 없이 받기
+        url = f"https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=ko-KR&page={page}&region=KR&sort_by=vote_count.desc&watch_region=KR&with_genres={genre}"
+        headers = {
+            'Authorization': f'Bearer {api_key}'
+        }
+        response = requests.get(url, headers=headers).json()
 
+        # # api에 요청해서 정보 가져오기
+        # url = 'https://api.themoviedb.org/3/movie/top_rated'
+        # headers = {
+        #     'Authorization': f'Bearer {api_key}'
+        # }
+        # params = {
+        #     "api_key": api_key,
+        #     "language": 'ko-KR',
+        #     "region": 'KR',
+        #     "page": page,
+        # }
+        # response = requests.get(url, headers=headers, params=params).json()
 
-        # DB에 저장
-        image_url = f"{base_url}{poster_path}"
-        new_movie = GameMovie.objects.create(title=title, image=image_url)
-        new_movie.genre = Genre.objects.get(code=genre_id)
-        new_movie.save()
+        # response에 들어있는 영화를 순회
+        for movie in response.get('results'):
+            # GameMovie에 들어갈 정보들을 변수에 저장
+            title = movie.get('title')
+            poster_path = movie.get('poster_path')
+
+            # genre_id를 '우리가 정의한 장르'와 매칭시키기
+            genre_id = convert_genre.get(str(genre))
+
+            # DB에 저장
+            image_url = f"{base_url}{poster_path}"
+            new_movie = GameMovie.objects.get_or_create(title=title, image=image_url, genre=Genre.objects.get(code=genre_id))
+        
+        # 한국 영화만 받기
+        url = f"https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=ko-KR&page={page}&region=KR&sort_by=vote_count.desc&watch_region=KR&with_genres={genre}&with_origin_country=KR"
+        headers = {
+            'Authorization': f'Bearer {api_key}'
+        }
+        response = requests.get(url, headers=headers).json()
+
+        # response에 들어있는 영화를 순회
+        for movie in response.get('results'):
+            # GameMovie에 들어갈 정보들을 변수에 저장
+            title = movie.get('title')
+            poster_path = movie.get('poster_path')
+
+            # genre_id를 '우리가 정의한 장르'와 매칭시키기
+            genre_id = convert_genre.get(str(genre))
+
+            # DB에 저장
+            image_url = f"{base_url}{poster_path}"
+            new_movie = GameMovie.objects.get_or_create(title=title, image=image_url, genre=Genre.objects.get(code=genre_id))
 
     return Response(response)
