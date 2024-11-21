@@ -3,10 +3,13 @@ from django.conf import settings
 
 class Genre(models.Model):
     code = models.CharField(max_length=100)
-    text = models.CharField(max_length=100)
+    name = models.CharField(max_length=100)
 
 def get_default_genre():
     return Genre.objects.get_or_create(code="X", text='미정')[0].id
+
+    def __str__(self):
+        return self.code
 
 class Movie(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)

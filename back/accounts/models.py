@@ -9,7 +9,17 @@ class User(AbstractUser):
         ACTOR = 'AC', 'Actor'
         STAFF = 'ST', 'Staff'
     
-    genre = models.ForeignKey(Genre, default=1, on_delete=models.SET_DEFAULT)          # 장르가 삭제되도 user는 삭제되면 안 됨  
+    # 안 쓰는 필드의 값은 null로 통일
+    first_name = None
+    last_name = None
+
+    # 장르 필드는 기본값을 null로 설정
+    genre = models.ForeignKey(
+        Genre,
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL
+        )
     nickname = models.CharField(max_length=100)
     role = models.CharField(
         max_length=2,
@@ -47,4 +57,3 @@ class ApplyMovie(models.Model):
 
     class Meta:
         db_table = 'apply_movies'
-
