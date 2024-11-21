@@ -3,9 +3,8 @@ from allauth.account.utils import setup_user_email
 from dj_rest_auth.registration.serializers import RegisterSerializer
 from dj_rest_auth.serializers import UserDetailsSerializer
 from rest_framework import serializers
-from .models import User
+from .models import User, Movie
 from django.contrib.auth import get_user_model
-
 
 UserModel = get_user_model()
 
@@ -89,3 +88,19 @@ class CustomUserDetailsSerializer(UserDetailsSerializer):
         
         instance.save()
         return instance
+    
+
+class ProfileSerializer(serializers.ModelSerializer):
+    class MovieSerializer(serializers.ModelSerializer):
+        class Meta:
+            model = Movie
+            fields = ['title']  # 필요한 필드만 선택
+
+    like_movies = MovieSerializer(many=True, read_only=True)
+    fund_movies = MovieSerializer(many=True, read_only=True)
+    apply_movies = MovieSerializer(many=True, read_only=True)
+
+
+    class Meta:
+        model = UserModel
+        fields = ['id', 'username', 'email', 'like_movies', 'fund_movies', 'apply_movies' ]
