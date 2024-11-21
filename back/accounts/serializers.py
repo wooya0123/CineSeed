@@ -94,13 +94,17 @@ class ProfileSerializer(serializers.ModelSerializer):
     class MovieSerializer(serializers.ModelSerializer):
         class Meta:
             model = Movie
-            fields = ['title']  # 필요한 필드만 선택
+            fields = ['id', 'title']  # 필요한 필드만 선택
 
+    class Meta:
+        model = User
+        fields = ['id', 'nickname', 'role', 'introduction', 'profile_image', 'instagram', 'etc',
+                  'cash', 'title', 'genre', 'like_movies', 'fund_movies', 'apply_movies']
+        read_only_fields = ['genre']
+        
     like_movies = MovieSerializer(many=True, read_only=True)
     fund_movies = MovieSerializer(many=True, read_only=True)
     apply_movies = MovieSerializer(many=True, read_only=True)
 
 
-    class Meta:
-        model = UserModel
-        fields = ['id', 'username', 'email', 'like_movies', 'fund_movies', 'apply_movies' ]
+    
