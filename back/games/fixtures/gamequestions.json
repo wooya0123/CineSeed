@@ -1,0 +1,134 @@
+[
+{
+    "model": "games.gamequestion",
+    "pk": 1,
+    "fields": {
+        "type": "g1c1",
+        "question1_text": "나는 영화를 볼 때",
+        "question1_a": "담백하고 현실적인 진행이 더 좋다",
+        "question1_b": "화려하고 빠른 편집과 진행이 더 좋다",
+        "question2_text": "나는 이런 영화를 더 좋아한다",
+        "question2_a": "잔잔한 힐링 영화",
+        "question2_b": "흥미진진한 오락 영화",
+        "question3_text": "나는 영화의 마지막이",
+        "question3_a": "슬프거나 답답하게 끝나면 보고 싶지 않다",
+        "question3_b": "뻔하고 현실성 없는 해피엔딩보다는 의미 있는 새드엔딩이 더 낫다",
+        "question4_text": "보고 싶은 영화가 개봉 예정일 때",
+        "question4_a": "다음 편이 나올 때까지 기다린다",
+        "question4_b": "전편 복습부터 하고 기다린다",
+        "question5_text": "나는 영화를 볼 때",
+        "question5_a": "잘 이해되는 확실한 영화가 좋다",
+        "question5_b": "추상적인 상징과 의미가 담긴 영화가 좋다"
+    }
+},
+{
+    "model": "games.gamequestion",
+    "pk": 2,
+    "fields": {
+        "type": "g1c2",
+        "question1_text": "나는 영화를 볼 때",
+        "question1_a": "담백하고 현실적인 진행이 더 좋다",
+        "question1_b": "화려하고 빠른 편집과 진행이 더 좋다",
+        "question2_text": "나는 이런 영화를 더 좋아한다",
+        "question2_a": "잔잔한 힐링 영화",
+        "question2_b": "흥미진진한 오락 영화",
+        "question3_text": "나는 영화의 마지막이",
+        "question3_a": "슬프거나 답답하게 끝나면 보고 싶지 않다",
+        "question3_b": "뻔하고 현실성 없는 해피엔딩보다는 의미 있는 새드엔딩이 더 낫다",
+        "question4_text": "영화를 보기 전",
+        "question4_a": "영화 예고편 등 정보에 대해 찾아 본다",
+        "question4_b": "스포일러가 될 수 있으니 절대 안 본다",
+        "question5_text": "영화를 고를 때",
+        "question5_a": "평점이 높은 영화를 본다",
+        "question5_b": "내가 끌리는 영화를 본다"
+    }
+},
+{
+    "model": "games.gamequestion",
+    "pk": 3,
+    "fields": {
+        "type": "g1c3",
+        "question1_text": "나는 영화를 볼 때",
+        "question1_a": "담백하고 현실적인 진행이 더 좋다",
+        "question1_b": "화려하고 빠른 편집과 진행이 더 좋다",
+        "question2_text": "나는 이런 영화를 더 좋아한다",
+        "question2_a": "잔잔한 힐링 영화",
+        "question2_b": "흥미진진한 오락 영화",
+        "question3_text": "나는 영화의 마지막이",
+        "question3_a": "슬프거나 답답하게 끝나면 보고 싶지 않다",
+        "question3_b": "뻔하고 현실성 없는 해피엔딩보다는 의미 있는 새드엔딩이 더 낫다",
+        "question4_text": "나는 영화를 볼 때",
+        "question4_a": "잘 이해되는 확실한 영화가 좋다",
+        "question4_b": "추상적인 상징과 의미가 담긴 영화가 좋다",
+        "question5_text": "내가 더 좋아하는 영화 진행 방식은",
+        "question5_a": "논리적으로 맞아떨어지는 촘촘한 스토리",
+        "question5_b": "다양한 해석이 나올 수 있는 자유로운 표현"
+    }
+},
+{
+    "model": "games.gamequestion",
+    "pk": 4,
+    "fields": {
+        "type": "g2c1",
+        "question1_text": "나는 영화를 볼 때",
+        "question1_a": "사건 전개가 빠른 영화가 더 재밌다",
+        "question1_b": "큰 사건이 없고 진행이 느려도 잘 집중한다",
+        "question2_text": "나는 영화를 볼 때",
+        "question2_a": "사건 진행에 더 집중한다",
+        "question2_b": "인물의 감정에 더 집중한다",
+        "question3_text": "나는 영화를 볼 때",
+        "question3_a": "어둡고 무거운 영화는 보기 힘들다",
+        "question3_b": "불편해도 생각해 볼 메시지를 얻고 싶다",
+        "question4_text": "보고 싶은 영화가 개봉 예정일 때",
+        "question4_a": "다음 편이 나올 때까지 기다린다",
+        "question4_b": "전편 복습부터 하고 기다린다",
+        "question5_text": "나는 영화를 볼 때",
+        "question5_a": "잘 이해되는 확실한 영화가 좋다",
+        "question5_b": "추상적인 상징과 의미가 담긴 영화가 좋다"
+    }
+},
+{
+    "model": "games.gamequestion",
+    "pk": 5,
+    "fields": {
+        "type": "g2c2",
+        "question1_text": "나는 영화를 볼 때",
+        "question1_a": "사건 전개가 빠른 영화가 더 재밌다",
+        "question1_b": "큰 사건이 없고 진행이 느려도 잘 집중한다",
+        "question2_text": "나는 영화를 볼 때",
+        "question2_a": "사건 진행에 더 집중한다",
+        "question2_b": "인물의 감정에 더 집중한다",
+        "question3_text": "나는 영화를 볼 때",
+        "question3_a": "어둡고 무거운 영화는 보기 힘들다",
+        "question3_b": "불편해도 생각해 볼 메시지를 얻고 싶다",
+        "question4_text": "영화를 보기 전",
+        "question4_a": "영화 예고편 등 정보에 대해 찾아 본다",
+        "question4_b": "스포일러가 될 수 있으니 절대 안 본다",
+        "question5_text": "영화를 고를 때",
+        "question5_a": "평점이 높은 영화를 본다",
+        "question5_b": "내가 끌리는 영화를 본다"
+    }
+},
+{
+    "model": "games.gamequestion",
+    "pk": 6,
+    "fields": {
+        "type": "g2c3",
+        "question1_text": "나는 영화를 볼 때",
+        "question1_a": "사건 전개가 빠른 영화가 더 재밌다",
+        "question1_b": "큰 사건이 없고 진행이 느려도 잘 집중한다",
+        "question2_text": "나는 영화를 볼 때",
+        "question2_a": "사건 진행에 더 집중한다",
+        "question2_b": "인물의 감정에 더 집중한다",
+        "question3_text": "나는 영화를 볼 때",
+        "question3_a": "어둡고 무거운 영화는 보기 힘들다",
+        "question3_b": "불편해도 생각해 볼 메시지를 얻고 싶다",
+        "question4_text": "나는 영화를 볼 때",
+        "question4_a": "잘 이해되는 확실한 영화가 좋다",
+        "question4_b": "추상적인 상징과 의미가 담긴 영화가 좋다",
+        "question5_text": "내가 더 좋아하는 영화 진행 방식은",
+        "question5_a": "논리적으로 맞아떨어지는 촘촘한 스토리",
+        "question5_b": "다양한 해석이 나올 수 있는 자유로운 표현"
+    }
+}
+]
