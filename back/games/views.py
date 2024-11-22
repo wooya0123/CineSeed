@@ -28,7 +28,7 @@ def game_setting(request):
 
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])  # 로그인한 사용자만 게임을 플레이할 수 있음
-def game_title(request):
+def game_result(request):
     # STEP 1.user에 title, genre를 설정
     # 받아온 결과 : g1c1aaaaa - g2c3bbbbb
     game_result = request.data.get('result')

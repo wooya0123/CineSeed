@@ -26,7 +26,7 @@ def movie_list(request):
 
 # 단일 데이터 대상(permission은 생각해보기)
 @api_view(['GET', 'DELETE', 'PUT'])
-def movies_detail(request, movie_id):
+def movie_detail(request, movie_id):
     movie = Movie.objects.get(id=movie_id)
 
     # 단일 데이터 조회
@@ -49,7 +49,7 @@ def movies_detail(request, movie_id):
 
 # 좋아요 기능
 @api_view(['POST'])
-def likes(request, movie_id):
+def like(request, movie_id):
     movie = Movie.objects.get(id=movie_id)
     user = request.user
 
@@ -75,7 +75,7 @@ def likes(request, movie_id):
 
 # 펀딩 기능
 @api_view(['POST'])
-def funds(request, movie_id):
+def fund(request, movie_id):
     user = request.user
     movie = Movie.objects.get(id=movie_id)
     funding = int(request.data.get('cash'))
@@ -96,3 +96,5 @@ def funds(request, movie_id):
         return Response({'잔액이 부족합니다.'}, status=status.HTTP_400_BAD_REQUEST)
         
 
+def application(request):
+    pass
