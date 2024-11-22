@@ -19,7 +19,7 @@ import requests
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])  # 로그인한 사용자만 게임을 플레이할 수 있음
 def game_setting(request):
-    game_pk = random.randint(1, 7)              # 질문 세트 pk 번호를 random하게 정하기 -> type는 총 6개
+    game_pk = random.randint(1, 6)              # 질문 세트 pk 번호를 random하게 정하기 -> type는 총 6개
     game_questions = get_object_or_404(GameQuestion, pk=game_pk)
 
     if request.method == 'GET':
@@ -61,7 +61,6 @@ def game_result(request):
     # STEP 2. 게임 영화 DB 넘겨주기
     user_like_movie = list(GameMovie.objects.filter(genre=request.user.genre))  # 사용자 선호 장르의 영화들을 DB에서 가져오기
     game_movie_list = random.sample(user_like_movie, 10)    # 10개의 영화를 랜덤으로 고르기
-    print(len(user_like_movie))
     serializer = GameMovieSerializer(game_movie_list, many=True)
 
     return Response(serializer.data)
