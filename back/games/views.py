@@ -61,7 +61,7 @@ def game_title(request):
     # STEP 2. 게임 영화 DB 넘겨주기
     user_like_movie = list(GameMovie.objects.filter(genre=request.user.genre))  # 사용자 선호 장르의 영화들을 DB에서 가져오기
     game_movie_list = random.sample(user_like_movie, 10)    # 10개의 영화를 랜덤으로 고르기
-
+    print(len(user_like_movie))
     serializer = GameMovieSerializer(game_movie_list, many=True)
 
     return Response(serializer.data)
@@ -111,33 +111,34 @@ def find_category(category_code):
 
     return code_dict.get(category_code)
 
+# TMDB의 genre_id와 우리 장르 분류 관계를 저장한 dict 만들기
+convert_genre = {
+    '28' : 'H', # 액션 H
+    '12' : 'H', # 모험 H
+    '16' : 'G', # 애니메이션 G
+    '35' : 'E', # 코미디 E
+    '80' : 'H', # 범죄 H
+    '99' : 'C', # 다큐멘터리 C
+    '18' : 'D', # 드라마 D
+    '10751' : 'E', # 가족 E
+    '14' : 'G', # 판타지 G
+    '36' : 'C', # 역사 C
+    '27' : 'F', # 공포 F
+    '10402' : 'B', # 음악 B
+    '9648' : 'F', # 미스터리 F
+    '10749' : 'A', # 로맨스 A
+    '878' : 'G', # SF G
+    '10770' : 'D', # TV 영화 D
+    '53' : 'F', # 스릴러 F
+    '10752' : 'H', # 전쟁 H
+    '37' : 'H', # 서부 H
+}
+base_url = "https://image.tmdb.org/t/p/original"    # 영화 이미지 url 앞에 부분
+api_key = settings.API_KEY
+
 @api_view(['POST'])
 def set_game_movie_data(request):
     page = int(request.POST.get('page'))                # page body로 받기
-    # TMDB의 genre_id와 우리 장르 분류 관계를 저장한 dict 만들기
-    convert_genre = {
-        '28' : 'H', # 액션 H
-        '12' : 'H', # 모험 H
-        '16' : 'G', # 애니메이션 G
-        '35' : 'E', # 코미디 E
-        '80' : 'H', # 범죄 H
-        '99' : 'C', # 다큐멘터리 C
-        '18' : 'D', # 드라마 D
-        '10751' : 'E', # 가족 E
-        '14' : 'G', # 판타지 G
-        '36' : 'C', # 역사 C
-        '27' : 'F', # 공포 F
-        '10402' : 'B', # 음악 B
-        '9648' : 'F', # 미스터리 F
-        '10749' : 'A', # 로맨스 A
-        '878' : 'G', # SF G
-        '10770' : 'D', # TV 영화 D
-        '53' : 'F', # 스릴러 F
-        '10752' : 'H', # 전쟁 H
-        '37' : 'H', # 서부 H
-    }
-    base_url = "https://image.tmdb.org/t/p/original"    # 영화 이미지 url 앞에 부분
-    api_key = settings.API_KEY
 
     # api에 요청해서 정보 가져오기 : vote_count 많은 순, 한국에서 볼 수 있는 작품(스트리밍 서비스에서), 장르별로 20개씩 데이터베이스에 저장
     genre_types = list(convert_genre.keys())
@@ -152,19 +153,6 @@ def set_game_movie_data(request):
         }
         response = requests.get(url, headers=headers).json()
 
-        # # api에 요청해서 정보 가져오기
-        # url = 'https://api.themoviedb.org/3/movie/top_rated'
-        # headers = {
-        #     'Authorization': f'Bearer {api_key}'
-        # }
-        # params = {
-        #     "api_key": api_key,
-        #     "language": 'ko-KR',
-        #     "region": 'KR',
-        #     "page": page,
-        # }
-        # response = requests.get(url, headers=headers, params=params).json()
-
         # response에 들어있는 영화를 순회
         for movie in response.get('results'):
             # GameMovie에 들어갈 정보들을 변수에 저장
@@ -176,8 +164,10 @@ def set_game_movie_data(request):
 
             # DB에 저장
             image_url = f"{base_url}{poster_path}"
-            new_movie = GameMovie.objects.get_or_create(title=title, image=image_url, genre=Genre.objects.get(code=genre_id))
-        
+            GameMovie.objects.get_or_create(title=title, image=image_url, genre=Genre.objects.get(code=genre_id))
+    
+    genre_types.remove('10402') # 한국 음악 카테고리 받지 않음
+    for genre in genre_types:    
         # 한국 영화만 받기
         url = f"https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=ko-KR&page={page}&region=KR&sort_by=vote_count.desc&watch_region=KR&with_genres={genre}&with_origin_country=KR"
         headers = {
@@ -196,6 +186,57 @@ def set_game_movie_data(request):
 
             # DB에 저장
             image_url = f"{base_url}{poster_path}"
-            new_movie = GameMovie.objects.get_or_create(title=title, image=image_url, genre=Genre.objects.get(code=genre_id))
+            GameMovie.objects.get_or_create(title=title, image=image_url, genre=Genre.objects.get(code=genre_id))
+
+    return Response(response)
+
+@api_view(['POST'])
+def set_additional_game_movie_data(request):
+    page = int(request.POST.get('page'))                # page body로 받기
+
+    # 부족한 장르 한 번 더 받기
+    genre_types = ['10749', '10402','18']
+    for genre in genre_types:
+        # 제작 국가 상관 없이 받기
+        url = f"https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=ko-KR&page={page}&region=KR&sort_by=vote_count.desc&watch_region=KR&with_genres={genre}"
+        headers = {
+            'Authorization': f'Bearer {api_key}'
+        }
+        response = requests.get(url, headers=headers).json()
+
+        # response에 들어있는 영화를 순회
+        for movie in response.get('results'):
+            # GameMovie에 들어갈 정보들을 변수에 저장
+            title = movie.get('title')
+            poster_path = movie.get('poster_path')
+
+            # genre_id를 '우리가 정의한 장르'와 매칭시키기
+            genre_id = convert_genre.get(str(genre))
+
+            # DB에 저장
+            image_url = f"{base_url}{poster_path}"
+            GameMovie.objects.get_or_create(title=title, image=image_url, genre=Genre.objects.get(code=genre_id))
+
+    genre_types.remove('10402') # 한국 음악 카테고리 받지 않음
+    for genre in genre_types:  
+        # 한국 영화만 받기        
+        url = f"https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=ko-KR&page={page}&region=KR&sort_by=vote_count.desc&watch_region=KR&with_genres={genre}&with_origin_country=KR"
+        headers = {
+            'Authorization': f'Bearer {api_key}'
+        }
+        response = requests.get(url, headers=headers).json()
+
+        # response에 들어있는 영화를 순회
+        for movie in response.get('results'):
+            # GameMovie에 들어갈 정보들을 변수에 저장
+            title = movie.get('title')
+            poster_path = movie.get('poster_path')
+
+            # genre_id를 '우리가 정의한 장르'와 매칭시키기
+            genre_id = convert_genre.get(str(genre))
+
+            # DB에 저장
+            image_url = f"{base_url}{poster_path}"
+            GameMovie.objects.get_or_create(title=title, image=image_url, genre=Genre.objects.get(code=genre_id))
 
     return Response(response)
