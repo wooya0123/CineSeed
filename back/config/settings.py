@@ -50,7 +50,7 @@ INSTALLED_APPS = [
     'allauth',
     'allauth.account',
     'dj_rest_auth.registration',
-    # 'allauth.socialaccount',
+    'allauth.socialaccount',
 
     'django.contrib.admin',
     'django.contrib.auth',
