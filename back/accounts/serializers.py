@@ -99,8 +99,7 @@ class ProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ['id', 'nickname', 'role', 'introduction', 'profile_image', 'instagram', 'etc',
-                  'cash', 'title', 'genre', 'like_movies', 'fund_movies', 'apply_movies']
-        read_only_fields = ['genre']
+                  'cash', 'title', 'like_movies', 'fund_movies', 'apply_movies']
         
     like_movies = MovieSerializer(many=True, read_only=True)
     fund_movies = MovieSerializer(many=True, read_only=True)
