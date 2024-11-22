@@ -87,7 +87,6 @@ def funds(request, movie_id):
         
         # 펀딩 금액만큼 영화 후원 총액 증가
         fund_movie = FundMovie.objects.get_or_create(user=user, movie=movie, defaults={'amount': 0})
-        print(fund_movie)
         fund_movie = fund_movie[0]
         fund_movie.amount += funding
         fund_movie.save()
