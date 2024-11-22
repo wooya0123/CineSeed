@@ -24,14 +24,19 @@ def profile(request, user_id):
             serializer = DirectorProfileSerializer(user)
             return Response(serializer.data)
         
-        # 그 외일 경우 지원한 영화 정보를 보내줌
+        # 스탭/배우/Undfined일 경우 지원한 영화 정보를 보내줌
         else:
             serializer = ProfileSerializer(user)
             return Response(serializer.data)
     
     # 프로필 페이지 수정
     elif request.method == 'PUT':
-        serializer = ProfileSerializer(user, data=request.data, partial=True)
+        # 감독일 경우
+        if user.role == 'DI':
+            serializer = DirectorProfileSerializer(user, data=request.data, partial=True)
+        # 스탭/배우/Undfined일 경우
+        else:
+            serializer = ProfileSerializer(user, data=request.data, partial=True)
 
         if serializer.is_valid():
             if user.id == request_user_id:
