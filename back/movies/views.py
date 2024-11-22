@@ -8,6 +8,10 @@ from .serializers import MovieListSerializer, MovieSerializer, MovieCreateSerial
 
 from django.db.models import Count
 
+# Permission Decorators
+from rest_framework.decorators import permission_classes
+from rest_framework.permissions import IsAuthenticated
+
 # 전체 db 대상(permission은 생각해보기)
 @api_view(['GET', 'POST'])
 def movie_list(request):
@@ -19,6 +23,10 @@ def movie_list(request):
 
     # 데이터 전송, db 수정
     elif request.method == 'POST':
+        # 로그인하지 않은 유저는 수정 불가
+        if not request.user.is_authenticated:
+            return Response({'message': '로그인하지 않은 사용자입니다'}, status=status.HTTP_401_UNAUTHORIZED)
+        
         serializer = MovieCreateSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save(user=request.user)
@@ -38,10 +46,16 @@ def movie_detail(request, movie_id):
 
     # 단일 데이터 삭제
     elif request.method == 'DELETE':
+        if not request.user.is_authenticated:
+            return Response({'message': '로그인하지 않은 사용자입니다'}, status=status.HTTP_401_UNAUTHORIZED)
+        
         movie.delete()
 
     #단일 데이터 수정
     elif request.method == 'PUT':
+        if not request.user.is_authenticated:
+            return Response({'message': '로그인하지 않은 사용자입니다'}, status=status.HTTP_401_UNAUTHORIZED)
+        
         serializer = MovieUpdateSerializer(movie, data=request.data, partial=True)
         if serializer.is_valid():
             serializer.save(user=request.user)
@@ -51,6 +65,7 @@ def movie_detail(request, movie_id):
 
 # 좋아요 기능
 @api_view(['POST'])
+@permission_classes([IsAuthenticated])
 def like(request, movie_id):
     movie = Movie.objects.get(id=movie_id)
     user = request.user
@@ -77,6 +92,7 @@ def like(request, movie_id):
 
 # 펀딩 기능
 @api_view(['POST'])
+@permission_classes([IsAuthenticated])
 def fund(request, movie_id):
     user = request.user
     movie = Movie.objects.get(id=movie_id)
@@ -98,8 +114,32 @@ def fund(request, movie_id):
         return Response({'잔액이 부족합니다.'}, status=status.HTTP_400_BAD_REQUEST)
         
 
-def application(request):
-    pass
+# 스탭으로 지원하기 기능
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def application(request, movie_id):
+    user = request.user
+    movie = Movie.objects.get(id=movie_id)
+
+    # 감독이 아니면, 테이블에 데이터 저장, 지원하면 취소는 불가
+    if user.role == 'ST':
+        if user in movie.apply_users.all():
+            is_applied = True
+            pass
+        else:
+            movie.apply_users.add(user)
+            is_applied = True
+
+        result = {
+            'message': '지원 완료',
+            'is_applied': is_applied
+        }
+        return Response(result)
+    else:
+        result = {
+            'message': '권한이 없습니다'
+        }
+        return Response(result)
 
 @api_view(['GET'])
 def popular_recommandation(request):

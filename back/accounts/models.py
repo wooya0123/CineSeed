@@ -53,7 +53,6 @@ class FundMovie(models.Model):
 class ApplyMovie(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     movie = models.ForeignKey(Movie, on_delete=models.CASCADE)
-    application = models.TextField()
 
     class Meta:
         db_table = 'apply_movies'

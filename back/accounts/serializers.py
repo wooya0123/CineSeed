@@ -90,20 +90,63 @@ class CustomUserDetailsSerializer(UserDetailsSerializer):
         return instance
     
 
+
+
+class MovieSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Movie
+        fields = ['id', 'title']  # 필요한 필드만 선택
+
+class ApplyUserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['id', 'nickname', 'role', 'introduction', 'profile_image', 'instagram', 'etc']
+
+class MovieWithApplicantsSerializer(serializers.ModelSerializer):
+    apply_users = ApplyUserSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = Movie
+        fields = ['id', 'title', 'apply_users']
+
+
+class DirectorProfileSerializer(serializers.ModelSerializer):
+    like_movies = MovieSerializer(many=True, read_only=True)
+    fund_movies = MovieSerializer(many=True, read_only=True)
+    my_movie = MovieWithApplicantsSerializer(source='movie_set', many=True, read_only=True)
+
+    class Meta:
+        model = User
+        fields = ['id', 'nickname', 'role', 'introduction', 'profile_image', 'instagram', 'etc',
+                  'title', 'like_movies', 'fund_movies', 'my_movie']
+
+
+
 class ProfileSerializer(serializers.ModelSerializer):
-    class MovieSerializer(serializers.ModelSerializer):
-        class Meta:
-            model = Movie
-            fields = ['id', 'title']  # 필요한 필드만 선택
+    like_movies = MovieSerializer(many=True, read_only=True)
+    fund_movies = MovieSerializer(many=True, read_only=True)
+    apply_movies = MovieSerializer(many=True, read_only=True)
 
     class Meta:
         model = User
         fields = ['id', 'nickname', 'role', 'introduction', 'profile_image', 'instagram', 'etc',
                   'cash', 'title', 'like_movies', 'fund_movies', 'apply_movies']
         
-    like_movies = MovieSerializer(many=True, read_only=True)
-    fund_movies = MovieSerializer(many=True, read_only=True)
-    apply_movies = MovieSerializer(many=True, read_only=True)
+
+# class DirectorProfileSerializer(serializers.ModelSerializer):
+#     class MovieIdSerializer(serializers.ModelSerializer):
+#         class Meta:
+#             model = Movie
+#             fields = ['id']
 
 
+#     like_movies = MovieSerializer(many=True, read_only=True)
+#     fund_movies = MovieSerializer(many=True, read_only=True)
+#     my_movie = MovieSerializer(many=True, ) 
+
+
+#     class Meta:
+#         model = User
+#         fields = ['id', 'nickname', 'role', 'introduction', 'profile_image', 'instagram', 'etc',
+#                   'title', 'like_movies', 'fund_movies', ]
     
