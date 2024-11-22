@@ -4,7 +4,9 @@ from rest_framework import status
 
 from .models import Movie
 from accounts.models import FundMovie
-from .serializers import MovieListSerializer, MovieSerializer, MovieCreateSerializer, MovieUpdateSerializer
+from .serializers import MovieListSerializer, MovieSerializer, MovieCreateSerializer, MovieUpdateSerializer, MoviePopularSerializer
+
+from django.db.models import Count
 
 # 전체 db 대상(permission은 생각해보기)
 @api_view(['GET', 'POST'])
@@ -98,3 +100,27 @@ def fund(request, movie_id):
 
 def application(request):
     pass
+
+@api_view(['GET'])
+def popular_recommandation(request):
+    # 좋아요 순 펀딩 추천
+    popular_movies = (
+        Movie.objects.annotate(like_count=Count('like_users'))  # 좋아요 개수를 계산 -> 필드 추가
+        .order_by('-like_count', '-start_date')[:9]            # 좋아요가 많고, 최신순으로 정렬
+    )
+    if not popular_movies.exists():
+        return Response({"message": "추천할 영화가 없습니다."}, status=status.HTTP_404_NOT_FOUND)
+    
+    serializer = MoviePopularSerializer(popular_movies, many=True)
+    return Response(serializer.data)
+
+@api_view(['GET']) 
+def personalized_recommandation(request):
+    # 회원 취향 맞춤 펀딩 추천
+    user_preferred_genre = request.user.genre # 사용자의 선호 장르
+    user_preferred_movies = (
+        Movie.objects.filter(genre=user_preferred_genre)    # 사용자가 선호하는 장르 필터
+    )
+
+    serializer = MovieListSerializer(user_preferred_movies, many=True)
+    return Response(serializer.data)

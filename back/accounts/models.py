@@ -27,7 +27,7 @@ class User(AbstractUser):
         default=Role.UNDEFINED
     )
     introduction = models.TextField(blank=True)
-    profile_image = models.ImageField(blank=True, upload_to='images/')
+    profile_image = models.ImageField(blank=True, upload_to='images/', default='images/default/profile.png')
     instagram = models.URLField(blank=True)
     etc = models.CharField(max_length=250, blank=True)
     cash = models.IntegerField(default=1000000)

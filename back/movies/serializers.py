@@ -46,3 +46,11 @@ class MovieUpdateSerializer(serializers.ModelSerializer):
         model = Movie
         exclude = ('start_date', 'end_date',)
         read_only_fields = ('user',)
+
+
+class MoviePopularSerializer(serializers.ModelSerializer):
+    like_count = serializers.IntegerField(read_only=True)   # annotate로 추가된 필드
+
+    class Meta:
+        model = Movie
+        fields = ('id', 'title', 'image', 'like_count')
