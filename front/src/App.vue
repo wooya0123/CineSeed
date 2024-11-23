@@ -1,9 +1,18 @@
 <template>
   <div>
-    <RouterLink :to="{ name : 'home' }">홈</RouterLink> |
-    <RouterLink :to="{ name : 'login' }">로그인</RouterLink> | 
-    <RouterLink :to="{ name : 'signup' }">회원가입</RouterLink>
-    <form @submit.prevent="logOut" v-show="store.isLogIn">
+    <RouterLink :to="{ name : 'home' }">홈</RouterLink>
+    <span v-if="!account.user">
+      | <RouterLink :to="{ name : 'login' }">로그인</RouterLink>
+    </span>
+    <span v-if="!account.user">
+      | <RouterLink :to="{ name : 'signup' }">회원가입</RouterLink>
+    </span>
+    <span v-if="account.user">
+      | <RouterLink :to="{ name : 'profile', params: { id: account.user.pk }}">마이페이지</RouterLink>
+    </span>
+
+    
+    <form @submit.prevent="logOut" v-show="account.isLogIn">
       <input type="submit" value="로그아웃">
     </form>
 
@@ -16,10 +25,10 @@
 import { RouterView, RouterLink } from 'vue-router'
 import { useAccountStore } from './stores/account'
 
-const store = useAccountStore()
+const account = useAccountStore()
 
 const logOut = function () {
-  store.logOut()
+  account.logOut()
 }
 </script>
 
