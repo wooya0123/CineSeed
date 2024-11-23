@@ -56,9 +56,9 @@ const password2 = ref(null)
 const nickname = ref(null)
 const role = ref(null)
 const email = ref(null)
-const instagram = ref(null)
-const etc = ref(null)
-const introduction = ref(null)
+const instagram = ref('')
+const etc = ref('')
+const introduction = ref('')
 
 const signUp = function () {
     const payload = {
