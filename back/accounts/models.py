@@ -4,10 +4,10 @@ from movies.models import Movie, Genre
 
 class User(AbstractUser):
     class Role(models.TextChoices):
-        UNDEFINED = 'UN', 'Undefined'
-        DIRECTOR = 'DI', 'Director'
-        ACTOR = 'AC', 'Actor'
-        STAFF = 'ST', 'Staff'
+        UNDEFINED = '유저', '유저'
+        DIRECTOR = '감독', '감독'
+        ACTOR = '배우', '배우'
+        STAFF = '크루', '크루'
     
     # 안 쓰는 필드의 값은 null로 통일
     first_name = None

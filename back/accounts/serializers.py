@@ -117,8 +117,7 @@ class DirectorProfileSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ['id', 'nickname', 'role', 'introduction', 'profile_image', 'instagram', 'etc',
-                  'title', 'like_movies', 'fund_movies', 'my_movie']
+        fields = ['id', 'nickname', 'role', 'introduction', 'profile_image', 'instagram', 'etc', 'title', 'like_movies', 'fund_movies', 'my_movie']
 
 
 
@@ -129,24 +128,5 @@ class ProfileSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ['id', 'nickname', 'role', 'introduction', 'profile_image', 'instagram', 'etc',
-                  'cash', 'title', 'like_movies', 'fund_movies', 'apply_movies']
-        
-
-# class DirectorProfileSerializer(serializers.ModelSerializer):
-#     class MovieIdSerializer(serializers.ModelSerializer):
-#         class Meta:
-#             model = Movie
-#             fields = ['id']
-
-
-#     like_movies = MovieSerializer(many=True, read_only=True)
-#     fund_movies = MovieSerializer(many=True, read_only=True)
-#     my_movie = MovieSerializer(many=True, ) 
-
-
-#     class Meta:
-#         model = User
-#         fields = ['id', 'nickname', 'role', 'introduction', 'profile_image', 'instagram', 'etc',
-#                   'title', 'like_movies', 'fund_movies', ]
+        fields = ['id', 'nickname', 'role', 'introduction', 'profile_image', 'instagram', 'etc', 'cash', 'title', 'like_movies', 'fund_movies', 'apply_movies']
     

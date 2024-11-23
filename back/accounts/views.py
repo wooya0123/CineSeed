@@ -20,7 +20,7 @@ def profile(request, user_id):
     # 프로필 페이지 조회
     if request.method == 'GET':
         # 감독일 경우 지원한 영화 대신 지원자 정보를 보내줌
-        if user.role == 'DI':
+        if user.role == '감독':
             serializer = DirectorProfileSerializer(user)
             return Response(serializer.data)
         
@@ -32,7 +32,7 @@ def profile(request, user_id):
     # 프로필 페이지 수정
     elif request.method == 'PUT':
         # 감독일 경우
-        if user.role == 'DI':
+        if user.role == '감독':
             serializer = DirectorProfileSerializer(user, data=request.data, partial=True)
         # 스탭/배우/Undfined일 경우
         else:
