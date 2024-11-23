@@ -4,7 +4,7 @@ from rest_framework import status
 
 from .models import Movie
 from accounts.models import FundMovie
-from .serializers import MovieListSerializer, MovieSerializer, MovieCreateSerializer, MovieUpdateSerializer, MoviePopularSerializer
+from .serializers import MovieListSerializer, MovieSerializer, MovieCreateSerializer, MovieUpdateSerializer, MovieRecommendationSerializer
 
 from django.db.models import Count
 
@@ -151,16 +151,18 @@ def popular_recommandation(request):
     if not popular_movies.exists():
         return Response({"message": "추천할 영화가 없습니다."}, status=status.HTTP_404_NOT_FOUND)
     
-    serializer = MoviePopularSerializer(popular_movies, many=True)
+    serializer = MovieRecommendationSerializer(popular_movies, many=True)
     return Response(serializer.data)
 
-@api_view(['GET']) 
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
 def personalized_recommandation(request):
     # 회원 취향 맞춤 펀딩 추천
     user_preferred_genre = request.user.genre # 사용자의 선호 장르
+    print('유저 정보', request.user)
     user_preferred_movies = (
         Movie.objects.filter(genre=user_preferred_genre)    # 사용자가 선호하는 장르 필터
     )
 
-    serializer = MovieListSerializer(user_preferred_movies, many=True)
+    serializer = MovieRecommendationSerializer(user_preferred_movies, many=True)
     return Response(serializer.data)

@@ -10,13 +10,6 @@ class MovieListSerializer(serializers.ModelSerializer):
         read_only_fields = ('user', 'genre',)
 
 class MovieSerializer(serializers.ModelSerializer):
-    # class FundMovieSerializer(serializers.ModelSerializer):
-    #     class Meta:
-    #         model = FundMovie
-    #         fields = ['user_id', 'amount']
-
-    # fund_users = FundMovieSerializer(source='fundmovie_set', many=True, read_only=True)
-
     fund_users = serializers.IntegerField(source='fundmovie_set.count', read_only=True)
     fund_amounts = serializers.SerializerMethodField('get_fund_amounts')
     
@@ -48,9 +41,13 @@ class MovieUpdateSerializer(serializers.ModelSerializer):
         read_only_fields = ('user',)
 
 
-class MoviePopularSerializer(serializers.ModelSerializer):
+class MovieRecommendationSerializer(serializers.ModelSerializer):
+
     like_count = serializers.IntegerField(read_only=True)   # annotate로 추가된 필드
+    genre = serializers.CharField(source='genre.name', read_only=True)
+    user_nickname = serializers.CharField(source='user.nickname')
+    profile_image = serializers.ImageField(source='user.profile_image')
 
     class Meta:
         model = Movie
-        fields = ('id', 'title', 'image', 'like_count')
+        fields = ('id', 'user_nickname', 'profile_image', 'title', 'image', 'genre', 'like_count')
