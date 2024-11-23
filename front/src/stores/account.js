@@ -5,8 +5,10 @@ import { useRouter } from 'vue-router'
 
 export const useAccountStore = defineStore('account', () => {
     const API_URL = 'http://127.0.0.1:8000'
-    const token = ref(null)
-    const user = ref(null)
+    const token = ref(localStorage.getItem('user-token'))
+    const user = ref(JSON.parse(localStorage.getItem('user-info')))     // 유저 정보를 담은 객체
+    const profile = ref(JSON.parse(localStorage.getItem('user-profile')))
+
     const isLogIn = computed(() => {
         if (token.value === null) {
             return false
@@ -14,6 +16,7 @@ export const useAccountStore = defineStore('account', () => {
             return true
         }
     })
+    
     const router = useRouter()
 
     const signUp = function (payload) {
@@ -37,8 +40,8 @@ export const useAccountStore = defineStore('account', () => {
             .then((res) => {
                 console.log('회원가입 성공')
                 const password = password1
-                logIn({ username, password})// 회원가입 후 로그인 해주기
-
+                logIn({ username, password})    // 회원가입 후 로그인 해주기
+                router.push({ name: 'home' })   // 회원가입 후 홈으로 이동
             })
             .catch((error) => {
                 console.error('Error:', error.response || error.message || error)   
@@ -59,6 +62,7 @@ export const useAccountStore = defineStore('account', () => {
             .then((res) => {
                 console.log('로그인 성공')
                 token.value = res.data.key
+                localStorage.setItem('user-token', token.value) // 토큰을 로컬 스토리지에 저장
                 
                 // 로그인 후 유저 정보 가져오기
                 return axios({
@@ -70,9 +74,11 @@ export const useAccountStore = defineStore('account', () => {
                 })
             })
             .then((userResponse) => {
-                // 가져온 정보를 user에 저장하기
                 user.value = userResponse.data
+                // 프로필 정보를 로컬 스토리지에 저장
+                localStorage.setItem('user-info', JSON.stringify(user.value)) // 유저 정보를 로컬 스토리지에 저장
                 // 로그인 성공 후 페이지 이동
+                router.push({ name: 'home' })
             })
             .catch((error) => {
                 console.error('Error:', error.response || error.message || error)     
@@ -86,16 +92,40 @@ export const useAccountStore = defineStore('account', () => {
           })
             .then((res) => {
               console.log(res.data)
-              token.value = null
               res.value = null
+              token.value = null
               user.value = null
+              profile.value = null
+
+              localStorage.removeItem('user-token') // 로컬 스토리지에서 토큰 제거
+              localStorage.removeItem('user-info') // 로컬 스토리지에서 사용자 정보 제거
+              localStorage.removeItem('user-profile') // 로컬 스토리지에서 사용자 정보 제거
+
               // 페이지 이동
+              router.push({ name: 'home' })
             })
             .catch((err) => {
               console.log(err)
             })
     }
 
+    const myPage = function () {
+        axios({
+            method: 'get',
+            url: `${API_URL}/api/v1/profile/${user.value.pk}/`,
+            headers: {
+                'Authorization': `Token ${token.value}`
+            }
+        })
+            .then((res) => {
+                console.log(res.data)
+                profile.value = res.data
+                localStorage.setItem('user-profile', JSON.stringify(profile.value))
+            })
+            .catch((err) => {
+                console.error('Error:', error.response || error.message || error)
+            })
+    }
 
-    return { API_URL, signUp, logIn, token, user, isLogIn, logOut }
+    return { API_URL, token, user, profile, isLogIn, signUp, logIn, logOut, myPage }
 })
