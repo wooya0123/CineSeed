@@ -7,7 +7,6 @@
     <img class="profile_image" :src="profileImage" alt="profile_image">
     {{ movie.user_nickname }}
     <hr>
-    {{ movie }}
   </div>
 </template>
 
