@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div v-show="!store.isLogIn">
         <h1>회원가입</h1>
         <form @submit.prevent="signUp">
             <label for="profile_image">프로필 이미지</label><br>
@@ -37,11 +37,15 @@
             <button>회원가입</button>
         </form>
     </div>
+    <div v-show="store.isLogIn">
+        <SignUpComplete />
+    </div>
 </template>
 
 <script setup>
 import { ref } from 'vue'
 import { useAccountStore } from '@/stores/account'
+import SignUpComplete from '@/components/SignUpComplete.vue'
 
 const store = useAccountStore()
 
