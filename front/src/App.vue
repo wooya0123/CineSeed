@@ -5,11 +5,15 @@
     <form @submit.prevent="logOut" v-show="store.isLogIn">
       <input type="submit" value="로그아웃">
     </form>
+
+    <BaseHomeView />
   </div>
   <RouterView />
 </template>
 
 <script setup>
+import BaseHomeView from '@/views/BaseHomeView.vue';
+
 import { RouterView, RouterLink } from 'vue-router'
 import { useAccountStore } from './stores/account'
 
