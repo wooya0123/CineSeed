@@ -5,9 +5,9 @@ import { useRouter } from 'vue-router'
 
 export const useAccountStore = defineStore('account', () => {
     const API_URL = 'http://127.0.0.1:8000'
-    const token = ref(localStorage.getItem('user-token'))
-    const user = ref(JSON.parse(localStorage.getItem('user-info')))     // 유저 정보를 담은 객체
-    const profile = ref(JSON.parse(localStorage.getItem('user-profile')))
+    const token = ref(localStorage.getItem('user-token'))                       // 로그인 토큰 정보
+    const user = ref(JSON.parse(localStorage.getItem('user-info')))             // 유저 정보 (민감성 정보 제외 필요)
+    const profile = ref(JSON.parse(localStorage.getItem('user-profile')))       // 마이페이지용 유저 정보 (민감성 정보 제외 필요)
 
     const isLogIn = computed(() => {
         if (token.value === null) {
@@ -39,9 +39,7 @@ export const useAccountStore = defineStore('account', () => {
         })
             .then((res) => {
                 console.log('회원가입 성공')
-                const password = password1
-                logIn({ username, password})    // 회원가입 후 로그인 해주기
-                router.push({ name: 'home' })   // 회원가입 후 홈으로 이동
+                router.push({ name: 'login' })   // 회원가입 후 로그인 페이지로 이동
             })
             .catch((error) => {
                 console.error('Error:', error.response || error.message || error)   
@@ -70,15 +68,13 @@ export const useAccountStore = defineStore('account', () => {
                     url: `${API_URL}/accounts/user/`,
                     headers: {
                         'Authorization': `Token ${token.value}`
-                    }
+                    },
                 })
             })
             .then((userResponse) => {
                 user.value = userResponse.data
-                // 프로필 정보를 로컬 스토리지에 저장
-                localStorage.setItem('user-info', JSON.stringify(user.value)) // 유저 정보를 로컬 스토리지에 저장
-                // 로그인 성공 후 페이지 이동
-                router.push({ name: 'home' })
+                localStorage.setItem('user-info', JSON.stringify(user.value))   // 유저 정보를 로컬 스토리지에 저장
+                router.push({ name: 'home' })   // 로그인 성공 후 홈으로 이동
             })
             .catch((error) => {
                 console.error('Error:', error.response || error.message || error)     
@@ -97,12 +93,11 @@ export const useAccountStore = defineStore('account', () => {
               user.value = null
               profile.value = null
 
-              localStorage.removeItem('user-token') // 로컬 스토리지에서 토큰 제거
-              localStorage.removeItem('user-info') // 로컬 스토리지에서 사용자 정보 제거
-              localStorage.removeItem('user-profile') // 로컬 스토리지에서 사용자 정보 제거
+              localStorage.removeItem('user-token')     // 로컬 스토리지에서 토큰 제거
+              localStorage.removeItem('user-info')      // 로컬 스토리지에서 사용자 정보 제거
+              localStorage.removeItem('user-profile')   // 로컬 스토리지에서 사용자 정보 제거
 
-              // 페이지 이동
-              router.push({ name: 'home' })
+              router.push({ name: 'home' })     // 홈으로 이동
             })
             .catch((err) => {
               console.log(err)
@@ -110,12 +105,17 @@ export const useAccountStore = defineStore('account', () => {
     }
 
     const myPage = function () {
+        if (!user.value || !user.value.pk) {
+            console.error('User is not defined or does not have a pk property')
+            return
+        }
+        
         axios({
             method: 'get',
             url: `${API_URL}/api/v1/profile/${user.value.pk}/`,
             headers: {
                 'Authorization': `Token ${token.value}`
-            }
+            },
         })
             .then((res) => {
                 console.log(res.data)
