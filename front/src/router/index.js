@@ -2,6 +2,9 @@ import LogInView from '@/views/LogInView.vue'
 import SignUpView from '@/views/SignUpView.vue'
 import BaseHomeView from '@/views/BaseHomeView.vue'
 import BaseProfileView from '@/views/BaseProfileView.vue'
+import BaseMovieView from '@/views/BaseMovieView.vue'
+import MovieDetailView from '@/views/MovieDetailView.vue'
+import MovieEditView from '@/views/MovieEditView.vue'
 
 import { createRouter, createWebHistory } from 'vue-router'
 import { useAccountStore } from '@/stores/account'
@@ -29,20 +32,31 @@ const router = createRouter({
       path: '/profile/:id',
       name: 'profile',
       component: BaseProfileView,
-      meta: { requiresAuth: true } // 인증이 필요한 라우트에 메타 필드 추가
     },
+    {
+      path: '/movies',
+      name: 'movies',
+      component: BaseMovieView
+    },
+    {
+      path: '/movies/:id',
+      name: 'movieDetail',
+      component: MovieDetailView,
+    },
+    {
+      path: '/movies/:id/edit',
+      name: 'movieEdit',
+      component: MovieEditView,
+    }
   ],
 })
 
 // 네비게이션 가드 추가
+// meta: { requiresAuth: true } // 인증이 필요한 라우트에 메타 필드 추가
 router.beforeEach((to, from, next) => {
   const accountStore = useAccountStore()
-  if (to.matched.some(record => record.meta.requiresAuth)) {
-    if (!accountStore.isLogIn) {
-      next({ name: 'login' }) // 로그인 페이지로 리디렉션
-    } else {
-      next()
-    }
+  if (to.meta.requiresAuth && !accountStore.isLogIn) {
+    next({ name: 'login' }) // 로그인 페이지로 리디렉션
   } else {
     next()
   }

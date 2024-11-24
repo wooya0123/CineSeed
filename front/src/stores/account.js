@@ -104,12 +104,7 @@ export const useAccountStore = defineStore('account', () => {
             })
     }
 
-    const myPage = function () {
-        if (!user.value || !user.value.pk) {
-            console.error('User is not defined or does not have a pk property')
-            return
-        }
-        
+    const myPage = function () {    
         axios({
             method: 'get',
             url: `${API_URL}/api/v1/profile/${user.value.pk}/`,
