@@ -4,7 +4,7 @@ from rest_framework import status
 
 from .models import Movie
 from accounts.models import FundMovie
-from .serializers import MovieListSerializer, MovieSerializer, MovieCreateSerializer, MovieUpdateSerializer, MovieRecommendationSerializer
+from .serializers import MovieListSerializer, MovieDetailSerializer, MovieCreateSerializer, MovieUpdateSerializer, MovieRecommendationSerializer
 
 from django.db.models import Count
 
@@ -21,9 +21,9 @@ def movie_list(request):
         serializer = MovieListSerializer(movies, many=True)
         return Response(serializer.data)
 
-    # 데이터 전송, db 수정
+    # 영화 펀딩 글 작성
     elif request.method == 'POST':
-        # 로그인하지 않은 유저는 수정 불가
+        # 로그인하지 않은 유저는 작성 불가
         if not request.user.is_authenticated:
             return Response({'message': '로그인하지 않은 사용자입니다'}, status=status.HTTP_401_UNAUTHORIZED)
         
@@ -41,7 +41,7 @@ def movie_detail(request, movie_id):
 
     # 단일 데이터 조회
     if request.method == 'GET':
-        serializer = MovieSerializer(instance=movie)
+        serializer = MovieDetailSerializer(instance=movie)
         return Response(serializer.data)
 
     # 단일 데이터 삭제
@@ -122,7 +122,7 @@ def application(request, movie_id):
     movie = Movie.objects.get(id=movie_id)
 
     # 감독이 아니면, 테이블에 데이터 저장, 지원하면 취소는 불가
-    if user.role == 'ST':
+    if user.role != '감독':
         if user in movie.apply_users.all():
             is_applied = True
             pass
