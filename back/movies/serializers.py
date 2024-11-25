@@ -59,4 +59,4 @@ class MovieRecommendationSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Movie
-        fields = ('id', 'user_nickname', 'profile_image', 'title', 'image', 'genre', 'like_count')
+        fields = ('id', 'user_nickname', 'profile_image', 'title', 'image', 'genre', 'target_amount', 'like_count')

@@ -16,6 +16,7 @@ class Movie(models.Model):
     image = models.ImageField(blank=True, upload_to='movie_posters/', default='default_thumbnail.png')
     start_date = models.DateField()
     end_date = models.DateField()
+    target_amount = models.IntegerField()
     movie_introduction = models.TextField()
     team_introduction = models.TextField(blank=True)
     budget_plan = models.TextField(blank=True)
