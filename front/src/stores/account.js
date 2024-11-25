@@ -32,7 +32,34 @@ export const useAccountStore = defineStore('account', () => {
 
             })
             .catch((error) => {
-                console.error('Error:', error.response || error.message || error)   
+                console.log(error)
+                // 오류 응답 처리
+                if (error.response && error.response.data) {
+                    // 서버에서 반환된 오류 메시지를 alert로 표시
+                    const errorMessages = error.response.data; 
+                    
+                    // 필드별 오류 메시지를 처리하여 alert로 표시
+                    if (errorMessages.username) {
+                        // alert(`아이디 오류: ${errorMessages.username.join(', ')}`);
+                        alert('아이디 오류: 이미 존재하는 아이디입니다.')
+                    }
+                    if (errorMessages.nickname) {
+                        alert(`닉네임 오류: ${errorMessages.nickname.join(', ')}`);
+                        // alert('닉네임 오류: 이미 존재하는 닉네임입니다.')
+                    }
+                    if (errorMessages.email) {
+                        alert(`이메일 오류: ${errorMessages.email.join(', ')}`);
+                    }
+                    if (errorMessages.password1) {
+                        alert(`비밀번호 오류: ${errorMessages.password1.join(', ')}`);
+                    }
+                    if (errorMessages.password2) {
+                        alert(`비밀번호 오류: ${errorMessages.password2.join(', ')}`);
+                    }
+                } else {
+                    // 서버에서 오류 메시지가 없는 경우 일반적인 에러 메시지
+                    alert('회원가입 중 오류가 발생했습니다. 다시 시도해 주세요.');
+                }
             })
     }
 
@@ -53,7 +80,25 @@ export const useAccountStore = defineStore('account', () => {
                 // 로그인 성공 후 페이지 이동
             })
             .catch((error) => {
-                console.error('Error:', error.response || error.message || error)     
+                // 로그인 실패 시 오류 처리
+                if (error.response && error.response.data) {
+                    const errorMessages = error.response.data;
+        
+                    // 예를 들어, 로그인 오류 메시지에 대한 처리
+                    if (errorMessages.non_field_errors) {
+                        alert(`로그인 오류: ${errorMessages.non_field_errors.join(', ')}`);
+                    }
+        
+                    if (errorMessages.username) {
+                        alert(`아이디 오류: ${errorMessages.username.join(', ')}`);
+                    }
+        
+                    if (errorMessages.password) {
+                        alert(`비밀번호 오류: ${errorMessages.password.join(', ')}`);
+                    }
+                } else {
+                    alert('로그인 중 오류가 발생했습니다. 다시 시도해 주세요.');
+                }
             })
     }
 

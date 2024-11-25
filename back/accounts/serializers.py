@@ -6,6 +6,8 @@ from rest_framework import serializers
 from .models import User, Movie
 from django.contrib.auth import get_user_model
 
+from django.core.exceptions import ValidationError
+
 UserModel = get_user_model()
 
 class CustomRegisterSerializer(RegisterSerializer):
@@ -46,6 +48,12 @@ class CustomRegisterSerializer(RegisterSerializer):
         user.save()                             # 유저 객체를 db에 저장
         setup_user_email(request, user, [])     # 사용자 이메일 설정(이메일 확인)
         return user
+    
+    def validate(self, data):
+        # 비밀번호 확인
+        if data['password1'] != data['password2']:
+            raise ValidationError({"password2": "passwords does not match"})
+        return data
     
     
 class CustomUserDetailsSerializer(UserDetailsSerializer):
