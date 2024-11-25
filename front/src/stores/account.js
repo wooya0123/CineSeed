@@ -15,28 +15,20 @@ export const useAccountStore = defineStore('account', () => {
     })
     const router = useRouter()
 
-    const signUp = function (payload) {
-        const { username, password1, password2, nickname, role, email, instagram, etc, introduction } = payload
-
+    const signUp = function (formdata) {
         axios({
             method: 'post',
             url: `${API_URL}/accounts/signup/`,
-            data: {
-                username,
-                password1,
-                password2,
-                nickname,
-                role,
-                email,
-                instagram,
-                etc,
-                introduction
-            }
+            data: formdata
         })
             .then((res) => {
                 console.log('회원가입 성공')
-                const password = password1
-                logIn({ username, password})// 회원가입 후 로그인 해주기
+        
+                // formData에서 데이터를 가져올 때 키를 문자열로 명시
+                const username = formdata.get("username");
+                const password = formdata.get("password1")
+                // 로그인을 호출
+                logIn({ username, password })
 
             })
             .catch((error) => {
