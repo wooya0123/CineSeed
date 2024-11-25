@@ -1,19 +1,18 @@
-import { ref, computed } from 'vue'
+import { ref, computed, watch } from 'vue'
 import { defineStore } from 'pinia'
 import axios from 'axios'
 import { useRouter } from 'vue-router'
 
 export const useAccountStore = defineStore('account', () => {
     const API_URL = 'http://127.0.0.1:8000'
-    const token = ref(null)
-    const isLogIn = computed(() => {
-        if (token.value === null) {
-            return false
-        } else {
-            return true
-        }
-    })
+    const token = ref(localStorage.getItem('user-token') || null)                       // 로그인 토큰 정보
+    const user = ref(JSON.parse(localStorage.getItem('user-info') || null))             // 유저 정보 (민감성 정보 제외 필요)
+    const isLogIn = ref(!!token.value) // 초기값 설정
     const router = useRouter()
+
+    watch(token, (newToken) => {
+        isLogIn.value = !!newToken
+      })
 
     const signUp = function (formdata) {
         axios({
@@ -29,7 +28,6 @@ export const useAccountStore = defineStore('account', () => {
                 const password = formdata.get("password1")
                 // 로그인을 호출
                 logIn({ username, password })
-
             })
             .catch((error) => {
                 console.log(error)
@@ -74,12 +72,37 @@ export const useAccountStore = defineStore('account', () => {
                 password
             }
         })
-            .then((res) => {
-                token.value = res.data.key
-                console.log('로그인 성공')        
-                // 로그인 성공 후 페이지 이동
+        .then((res) => {
+            console.log('로그인 성공')
+            token.value = res.data.key
+            localStorage.setItem('user-token', token.value) // 토큰을 로컬 스토리지에 저장
+                
+            // 로그인 후 유저 정보 가져오기
+            return axios({
+                method: 'get',
+                url: `${API_URL}/accounts/user/`,
+                headers: {
+                'Authorization': `Token ${token.value}`
+                },
             })
-            .catch((error) => {
+        })
+        .then((userResponse) => {
+            return axios({
+                method: 'get',
+                url: `${API_URL}/api/v1/profile/${userResponse.data.pk}/`,
+                headers: {
+                    'Authorization': `Token ${token.value}`
+                },
+            })
+        })
+        .then((finalResponse) => {
+            console.log(finalResponse.data)
+            console.log(isLogIn)
+            user.value = finalResponse.data
+            localStorage.setItem('user-info', JSON.stringify(user.value))   // 로컬 스토리지에 유저 정보 저장
+            router.push({ name : 'home' })
+        })
+         .catch((error) => {
                 // 로그인 실패 시 오류 처리
                 if (error.response && error.response.data) {
                     const errorMessages = error.response.data;
@@ -109,14 +132,17 @@ export const useAccountStore = defineStore('account', () => {
           })
             .then((res) => {
               console.log(res.data)
+              res.value = null
               token.value = null
-              // 페이지 이동
+              user.value = null
+
+              localStorage.removeItem('user-token')     // 로컬 스토리지에서 토큰 제거
+              localStorage.removeItem('user-info')      // 로컬 스토리지에서 사용자 정보 제거
+              router.push({ name: 'home' })             // 홈으로 이동
             })
             .catch((err) => {
               console.log(err)
             })
     }
-
-
-    return { API_URL, signUp, logIn, token, isLogIn, logOut }
+    return { API_URL, token, user, isLogIn, signUp, logIn, logOut }
 })
