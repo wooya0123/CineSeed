@@ -11,14 +11,24 @@
         <br>
         <label for="genre">장르: </label>
         <select id="genre" v-model="movie.genre">
-          <!-- <option v-for="genre in genres" :key="genre.id" :value="genre.id">{{ genre.name }}</option> -->
+          <option value="1">로맨스</option>
+          <option value="2">음악</option>
+          <option value="3">다큐멘터리 / 역사</option>
+          <option value="4">드라마</option>
+          <option value="5">코미디 / 가족</option>
+          <option value="6">공포 / 스릴러 / 미스터리</option>
+          <option value="7">SF / 판타지 / 애니메이션</option>
+          <option value="8">액션 / 모험 / 범죄 / 전쟁</option>
         </select>
         <br>
         <label for="start_date">시작 날짜: </label>
-        <input type="date" id="start_date" v-model="movie.start_date">
+        <input type="date" id="start_date" v-model="movie.start_date" :min="minStartDate" :max="maxStartDate">
         <br>
         <label for="end_date">종료 날짜: </label>
-        <input type="date" id="end_date" v-model="movie.end_date">
+        <input type="date" id="end_date" v-model="movie.end_date" :min="minStartDate" :max="maxStartDate">
+        <br>
+        <label for="target_amount">목표 금액: </label>
+        <input type="number" id="target_amount" v-model="movie.target_amount" step="1000">
         <br>
         <label for="is_appliable">지원자 받기</label>
         <input type="checkbox" id="is_appliable" v-model="movie.is_appliable">
@@ -53,15 +63,24 @@ const id = ref(route.params.id)
 const account = useAccountStore()
 const movie = ref({
   title: '',
-  genre: '', 
+  genre: 'A', 
   start_date: '',
   end_date: '',
   is_appliable: '',
   movie_introduction: '',
   budget_plan: '',
   team_introduction: '',
-  image: null
+  image: null,
+  target_amount: ''
 })
+
+const today = new Date();
+const nextYear = new Date();
+nextYear.setFullYear(today.getFullYear() + 1);
+
+const minStartDate = today.toISOString().split('T')[0]
+const maxStartDate = nextYear.toISOString().split('T')[0]
+
 const movieAPI = account.API_URL + '/api/v1/movie/'
 
 
@@ -75,13 +94,14 @@ const handleImageUpload = (event) => {
 const createMovie = function () {
   const formData = new FormData()
   formData.append('title', movie.value.title)
-  formData.append('genre', 1)
+  formData.append('genre', movie.value.genre)
   formData.append('start_date', movie.value.start_date)
   formData.append('end_date', movie.value.end_date)
   formData.append('is_appliable', movie.value.is_appliable)
   formData.append('movie_introduction', movie.value.movie_introduction)
   formData.append('budget_plan', movie.value.budget_plan)
   formData.append('team_introduction', movie.value.team_introduction)
+  formData.append('target_amount', movie.value.target_amount)
   if (movie.value.image) {
     formData.append('image', movie.value.image)
   }

@@ -43,7 +43,15 @@
     
     <section v-else-if="account.user.role === '감독'">
       <h3>{{ nickname }}님의 영화</h3>
-      
+      <div 
+        v-for="movie in account.user.my_movie"
+        :key="movie.id"
+        >
+        <p>{{ movie.title }}</p>
+        <img class="movie_paster" :src="`${account.API_URL}${movie.image}`" alt="">
+        <p>{{ movie.apply_users }}</p>
+        
+      </div>
     </section>
     
     <section v-else>
@@ -74,5 +82,9 @@ const copyToClipboard = (text) => {
 <style scoped>
 .user_image {
   width: 10%;
+}
+
+.movie_paster {
+  width: 30%;
 }
 </style>

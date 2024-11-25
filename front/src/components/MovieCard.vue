@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="movie_card" @click="goToDetail">
     <img class="thumbnail" :src="thumbnailUrl" alt="movie_thumbnail">
     {{ movie.genre }}
     {{ movie.title }}
@@ -11,8 +11,14 @@
 </template>
 
 <script setup>
-
 import { computed } from 'vue';
+import { useRouter } from 'vue-router';
+
+const router = useRouter()
+
+const goToDetail = function () {
+  router.push({ name : 'movieDetail', params : { id : props.movie.id }})
+}
 
 const props = defineProps({
   movie: Object,
@@ -36,5 +42,9 @@ const profileImage = computed(() => {
 
 .profile_image {
   width: 100px;
+}
+
+.movie_card {
+  cursor: pointer;
 }
 </style>

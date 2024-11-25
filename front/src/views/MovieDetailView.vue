@@ -4,6 +4,7 @@
     <RouterLink :to="{ name: 'movies' }">목록으로</RouterLink>
     <header>
       <h2>{{ movie.title }}</h2>
+      <p>장르: {{ movie.genre }}</p>
       <img class="profile-image" :src="`${account.API_URL}${movie.profile_image}`" alt="">
       {{ movie.user_nickname }}
       <br>
@@ -11,9 +12,9 @@
 
       <section>
         <p>모집금액: {{ movie.fund_amounts }}원</p>
-        <p>남은 기간: </p>
+        <p>남은 기간: {{ daysUntilEndDate(movie.end_date) }}일</p>
         <p>후원자: {{ movie.fund_users }}명</p>
-        <p>목표 금액: ??(글 작성할 때 없음)</p>
+        <p>목표 금액: {{ movie.target_amount }}원</p>
         <p>펀딩 기간: {{ movie.start_date }}~{{ movie.end_date }}</p>
 
         <button v-if="isLiked" @click="movieLike">좋아요 취소</button>
@@ -44,7 +45,7 @@
       </section>
       <hr>
       <div v-if="account.isLogIn">
-        <button v-if="account.user.pk === movie.user" @click="updateMovie">수정하기</button>
+        <button v-if="account.user.id === movie.user" @click="updateMovie">수정하기</button>
         <button v-else-if="isApplied === false" @click="movieApply">크루로 지원하기</button>
         <button v-else>지원완료(비활성)</button>
       </div>
@@ -68,6 +69,14 @@ const movieAPI = account.API_URL + '/api/v1/movie/' + `${id.value}/`
 const isLiked = ref(null)
 const funding = ref(0)
 const isApplied = ref(false)
+
+
+const daysUntilEndDate = (endDate) => {
+  const today = new Date();
+  const end = new Date(endDate);
+  const timeDiff = end - today;
+  return Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
+}
 
 // 좋아요
 const movieLike = function () {
@@ -152,6 +161,7 @@ const getMovieDetail = function () {
   })
 }
 
+// 영화 데이터 mount 전에 불러오기
 onMounted(() => {
   getMovieDetail()
 }) 
