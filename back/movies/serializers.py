@@ -15,6 +15,7 @@ class MovieListSerializer(serializers.ModelSerializer):
 
 class MovieDetailSerializer(serializers.ModelSerializer):
     genre = serializers.CharField(source='genre.name', read_only=True)
+    genre_id = serializers.CharField(source='genre.pk', read_only=True)
     user_nickname = serializers.CharField(source='user.nickname')
     profile_image = serializers.ImageField(source='user.profile_image')
 
@@ -45,7 +46,7 @@ class MovieUpdateSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Movie
-        exclude = ('start_date', 'end_date',)
+        exclude = ('user', 'title', 'start_date', 'end_date',)
         read_only_fields = ('user',)
 
 

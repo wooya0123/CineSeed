@@ -1,6 +1,5 @@
 <template>
   <div v-if="movie">
-    {{ movie }}
     <hr>
     <RouterLink :to="{ name: 'movies' }">목록으로</RouterLink>
     <header>
@@ -12,7 +11,7 @@
 
       <section>
         <p>모집금액: {{ movie.fund_amounts }}원</p>
-        <p>남은 시간: </p>
+        <p>남은 기간: </p>
         <p>후원자: {{ movie.fund_users }}명</p>
         <p>목표 금액: ??(글 작성할 때 없음)</p>
         <p>펀딩 기간: {{ movie.start_date }}~{{ movie.end_date }}</p>
@@ -44,9 +43,12 @@
         {{ movie.team_introduction }}
       </section>
       <hr>
-      <button v-if="account.user.pk === movie.user" @click="updateMovie">수정하기</button>
-      <button v-else-if="isApplied === false" @click="movieApply">크루로 지원하기</button>
-      <button v-else>지원완료(비활성)</button>
+      <div v-if="account.isLogIn">
+        <button v-if="account.user.pk === movie.user" @click="updateMovie">수정하기</button>
+        <button v-else-if="isApplied === false" @click="movieApply">크루로 지원하기</button>
+        <button v-else>지원완료(비활성)</button>
+      </div>
+      
     </body>
   </div>
 </template>
@@ -65,7 +67,7 @@ const movie = ref(null)
 const movieAPI = account.API_URL + '/api/v1/movie/' + `${id.value}/`
 const isLiked = ref(null)
 const funding = ref(0)
-const isApplied = ref(null)
+const isApplied = ref(false)
 
 // 좋아요
 const movieLike = function () {

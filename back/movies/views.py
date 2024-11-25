@@ -46,21 +46,25 @@ def movie_detail(request, movie_id):
 
     # 단일 데이터 삭제
     elif request.method == 'DELETE':
-        if not request.user.is_authenticated:
+        if request.user == movie.user:
+            movie.delete()
+        elif not request.user.is_authenticated:
             return Response({'message': '로그인하지 않은 사용자입니다'}, status=status.HTTP_401_UNAUTHORIZED)
-        
-        movie.delete()
+        else:
+            return Response({'message': '권한이 없습니다'}, status=status.HTTP_401_UNAUTHORIZED)
 
     #단일 데이터 수정
     elif request.method == 'PUT':
-        if not request.user.is_authenticated:
+        if request.user == movie.user:
+            serializer = MovieUpdateSerializer(movie, data=request.data, partial=True)
+            if serializer.is_valid():
+                serializer.save(user=request.user)
+                return Response(serializer.data)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        elif not request.user.is_authenticated:
             return Response({'message': '로그인하지 않은 사용자입니다'}, status=status.HTTP_401_UNAUTHORIZED)
-        
-        serializer = MovieUpdateSerializer(movie, data=request.data, partial=True)
-        if serializer.is_valid():
-            serializer.save(user=request.user)
-            return Response(serializer.data)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        else:
+            return Response({'message': '권한이 없습니다'}, status=status.HTTP_401_UNAUTHORIZED)
     
 
 # 좋아요 기능

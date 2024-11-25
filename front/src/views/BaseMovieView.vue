@@ -3,10 +3,11 @@
     <RouterLink
       v-for="movie in movies"
       :key="movie.id"
-      :to="{ name: 'movieDetail', params: { id : movie.id } }"
+      :to="{ name : 'movieDetail', params: { id : movie.id } }"
       >
       <MovieCard :movie="movie"/>
     </RouterLink>
+    <RouterLink :to="{ name : 'movieCreate' }">글쓰기</RouterLink>
 
     <RouterView />
   </div>
