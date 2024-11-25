@@ -10,14 +10,14 @@
         </RouterLink>
       </span>
       <span v-if="!account.isLogIn">
-        | <RouterLink :to="{ name : 'signup' }" class="top-text nav-text:hover">
-            회원가입
-          </RouterLink>
+        <RouterLink :to="{ name : 'signup' }" class="top-text nav-text:hover">
+          회원가입
+        </RouterLink>
       </span>
       <span v-if="account.isLogIn && account.user">
-        | <RouterLink :to="{ name : 'profile', params: { id: account.user.id }}" class="top-text nav-text:hover">
-            마이페이지
-          </RouterLink>
+        <RouterLink :to="{ name : 'profile', params: { id: account.user.id }}" class="top-text nav-text:hover">
+          마이페이지
+        </RouterLink>
       </span>
 
       <form @submit.prevent="logOut" v-show="account.isLogIn">
@@ -58,12 +58,6 @@ const goHome = function () {
 </script>
 
 <style scoped>
-.container {
-  width: 1440px;
-  padding-left: 140px;
-  padding-right: 140px;
-  margin: 0px;
-}
 .top-nav {
   height:48px;
   padding-left:60px;
@@ -115,7 +109,7 @@ const goHome = function () {
 .menu-nav {
   height:48px;
   /* filter:drop-shadow(0px 4px 4px #f3b3d1); */
-  box-shadow: 0 3px 4px #f3b3d1;
+  box-shadow: 0 1px 10px #f478b2;
   padding-left:60px;
   padding-right:60px;
   display:flex;
