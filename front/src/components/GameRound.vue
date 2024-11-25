@@ -99,7 +99,7 @@ axios({
 const selectAnswer = function (answer) {
     result.value.push(answer)
     questionIndex.value++
- } 
+} 
 
 // 질문이 끝나면 데이터를 가져오기
 const setMovieRound = function () {
@@ -114,6 +114,7 @@ const setMovieRound = function () {
         }
     })
         .then((res) => {
+            getUserId()
             movies.value = [
                 {
                     title_a: res.data[0].title,
@@ -148,7 +149,7 @@ const setMovieRound = function () {
             ]
         })
         .catch((err) => {
-            console.log(err.status) 
+            console.log(err) 
             if (err.status === 401) {      
                 alert('로그인한 회원만 참여 가능합니다.')
                 console.log(accountStore.token.value) 
@@ -157,42 +158,42 @@ const setMovieRound = function () {
         })
 }
 
-// // 칭호 저장하기 step 1. pk 가져오기
-// const getUserId = function () {
-//     axios({
-//         method: 'get',
-//         url: `${API_URL}/accounts/user/`,
-//         headers: {
-//             Authorization: `Token ${accountStore.token}`
-//         },
-//     })
-//         .then((res) => {
-//             const id = ref(res.data.pk)
-//             getUserTitle(id.value)
-//         })
-//         .catch((err) => {
-//             console.error(err)
-//         })
-// }
+// 칭호 저장하기 step 1. pk 가져오기
+const getUserId = function () {
+    axios({
+        method: 'get',
+        url: `${API_URL}/accounts/user/`,
+        headers: {
+            Authorization: `Token ${accountStore.token}`
+        },
+    })
+        .then((res) => {
+            const id = ref(res.data.pk)
+            getUserTitle(id.value)
+        })
+        .catch((err) => {
+            console.error(err)
+        })
+}
 
 
-// // 칭호 저장하기 step 2. title 가져오기
-// const getUserTitle = function(id) {
-//     axios({
-//         method: 'get',
-//         url: `${API_URL}/api/v1/profile/${id}/`,
-//         headers: {
-//             Authorization: `Token ${accountStore.token}`
-//         }
-//     })
-//         .then((res) => {
-//             console.log(res.data)
-//             userTitle.value = res.data.title
-//         })
-//         .catch((err) => {
-//             console.error(err)
-//         })
-// }
+// 칭호 저장하기 step 2. title 가져오기
+const getUserTitle = function(id) {
+    axios({
+        method: 'get',
+        url: `${API_URL}/api/v1/profile/${id}/`,
+        headers: {
+            Authorization: `Token ${accountStore.token}`
+        }
+    })
+        .then((res) => {
+            console.log(res.data)
+            userTitle.value = res.data.title
+        })
+        .catch((err) => {
+            console.error(err)
+        })
+}
 
 
 // `watch`로 questionIndex가 끝났는지 감지
