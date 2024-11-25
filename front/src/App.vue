@@ -6,6 +6,9 @@
       <input type="submit" value="로그아웃">
     </form>
   </div>
+  <div>
+    <RouterLink :to="{ name : 'game' }">영화 취향 분석</RouterLink>
+  </div>
   <RouterView />
 </template>
 
