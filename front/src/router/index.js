@@ -5,6 +5,7 @@ import BaseProfileView from '@/views/BaseProfileView.vue'
 import BaseMovieView from '@/views/BaseMovieView.vue'
 import MovieDetailView from '@/views/MovieDetailView.vue'
 import MovieEditView from '@/views/MovieEditView.vue'
+import MovieCreateView from '@/views/MovieCreateView.vue'
 
 import { createRouter, createWebHistory } from 'vue-router'
 import { useAccountStore } from '@/stores/account'
@@ -42,6 +43,11 @@ const router = createRouter({
       path: '/movies/:id',
       name: 'movieDetail',
       component: MovieDetailView,
+    },
+    {
+      path: '/movies/create',
+      name: 'movieCreate',
+      component: MovieCreateView,
     },
     {
       path: '/movies/:id/edit',

@@ -9,8 +9,8 @@
     <span v-if="!account.isLogIn">
       | <RouterLink :to="{ name : 'signup' }">회원가입</RouterLink>
     </span>
-    <span v-if="account.isLogIn">
-      | <RouterLink :to="{ name : 'profile', params: { id: account.user.pk }}">마이페이지</RouterLink>
+    <span v-if="account.isLogIn && account.user">
+      | <RouterLink :to="{ name : 'profile', params: { id: account.user.id }}">마이페이지</RouterLink>
     </span>
 
 

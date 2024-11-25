@@ -19,10 +19,10 @@
 
             <label for="role">역할</label><br>
             <select id="role" v-model="role">
-                <option value="UN">미정</option>
-                <option value="DI">감독</option>
-                <option value="AC">배우</option>
-                <option value="ST">스태프</option>
+                <option value="미정">미정</option>
+                <option value="감독">감독</option>
+                <option value="배우">배우</option>
+                <option value="스탭">스탭</option>
             </select><br>
 
             <input type="text" id="email" placeholder="이메일" v-model="email"><br>
