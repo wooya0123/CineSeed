@@ -6,6 +6,8 @@ from rest_framework import serializers
 from .models import User, Movie
 from django.contrib.auth import get_user_model
 
+from django.core.exceptions import ValidationError
+
 UserModel = get_user_model()
 
 class CustomRegisterSerializer(RegisterSerializer):
@@ -46,6 +48,12 @@ class CustomRegisterSerializer(RegisterSerializer):
         user.save()                             # 유저 객체를 db에 저장
         setup_user_email(request, user, [])     # 사용자 이메일 설정(이메일 확인)
         return user
+    
+    def validate(self, data):
+        # 비밀번호 확인
+        if data['password1'] != data['password2']:
+            raise ValidationError({"password2": "passwords does not match"})
+        return data
     
     
 class CustomUserDetailsSerializer(UserDetailsSerializer):
@@ -95,7 +103,7 @@ class CustomUserDetailsSerializer(UserDetailsSerializer):
 class MovieSerializer(serializers.ModelSerializer):
     class Meta:
         model = Movie
-        fields = ['id', 'title']  # 필요한 필드만 선택
+        fields = ['id', 'title', 'image']  # 필요한 필드만 선택
 
 class ApplyUserSerializer(serializers.ModelSerializer):
     class Meta:
@@ -107,7 +115,7 @@ class MovieWithApplicantsSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Movie
-        fields = ['id', 'title', 'apply_users']
+        fields = ['id', 'title', 'image', 'apply_users']
 
 
 class DirectorProfileSerializer(serializers.ModelSerializer):
@@ -117,8 +125,7 @@ class DirectorProfileSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ['id', 'nickname', 'role', 'introduction', 'profile_image', 'instagram', 'etc',
-                  'title', 'like_movies', 'fund_movies', 'my_movie']
+        fields = ['id', 'nickname', 'role', 'introduction', 'profile_image', 'instagram', 'etc', 'cash', 'title', 'like_movies', 'fund_movies', 'my_movie']
 
 
 
@@ -129,24 +136,5 @@ class ProfileSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ['id', 'nickname', 'role', 'introduction', 'profile_image', 'instagram', 'etc',
-                  'cash', 'title', 'like_movies', 'fund_movies', 'apply_movies']
-        
-
-# class DirectorProfileSerializer(serializers.ModelSerializer):
-#     class MovieIdSerializer(serializers.ModelSerializer):
-#         class Meta:
-#             model = Movie
-#             fields = ['id']
-
-
-#     like_movies = MovieSerializer(many=True, read_only=True)
-#     fund_movies = MovieSerializer(many=True, read_only=True)
-#     my_movie = MovieSerializer(many=True, ) 
-
-
-#     class Meta:
-#         model = User
-#         fields = ['id', 'nickname', 'role', 'introduction', 'profile_image', 'instagram', 'etc',
-#                   'title', 'like_movies', 'fund_movies', ]
+        fields = ['id', 'nickname', 'role', 'introduction', 'profile_image', 'instagram', 'etc', 'cash', 'title', 'like_movies', 'fund_movies', 'apply_movies']
     

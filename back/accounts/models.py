@@ -4,10 +4,10 @@ from movies.models import Movie, Genre
 
 class User(AbstractUser):
     class Role(models.TextChoices):
-        UNDEFINED = 'UN', 'Undefined'
-        DIRECTOR = 'DI', 'Director'
-        ACTOR = 'AC', 'Actor'
-        STAFF = 'ST', 'Staff'
+        UNDEFINED = '미정', '미정'
+        DIRECTOR = '감독', '감독'
+        ACTOR = '배우', '배우'
+        STAFF = '스탭', '스탭'
     
     # 안 쓰는 필드의 값은 null로 통일
     first_name = None
@@ -27,11 +27,11 @@ class User(AbstractUser):
         default=Role.UNDEFINED
     )
     introduction = models.TextField(blank=True)
-    profile_image = models.ImageField(blank=True, null=True, upload_to='images/', default='default/profile.png')
+    profile_image = models.ImageField(blank=True, upload_to='profile_images/', default='default_profile.png')
     instagram = models.URLField(blank=True)
     etc = models.CharField(max_length=250, blank=True)
     cash = models.IntegerField(default=1000000)
-    title = models.CharField(max_length=100)
+    title = models.CharField(max_length=100, blank=True)
     like_movies = models.ManyToManyField(Movie, through='LikeMovie', related_name='like_users')
     fund_movies = models.ManyToManyField(Movie, through='FundMovie', related_name='fund_users')
     apply_movies = models.ManyToManyField(Movie, through='ApplyMovie', related_name='apply_users')

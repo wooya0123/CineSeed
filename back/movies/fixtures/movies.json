@@ -1,1 +1,53 @@
-[{"model": "movies.movie", "pk": 1, "fields": {"user": 4, "genre": 1, "title": "낭만적인 영화", "image": "images/default/thumbnail.png", "start_date": "2024-11-25", "end_date": "2024-11-29", "movie_introduction": "장르 A 영화입니다.", "team_introduction": "좋은 팀입니다.", "budget_plan": "로케이션 : 100만원", "is_appliable": true}}, {"model": "movies.movie", "pk": 2, "fields": {"user": 5, "genre": 2, "title": "감성적인 영화", "image": "images/default/thumbnail.png", "start_date": "2024-11-26", "end_date": "2024-11-30", "movie_introduction": "장르 B 영화입니다.", "team_introduction": "좋은 팀입니다.", "budget_plan": "로케이션: 100만원", "is_appliable": true}}, {"model": "movies.movie", "pk": 3, "fields": {"user": 6, "genre": 3, "title": "분석적인 영화", "image": "images/default/thumbnail.png", "start_date": "2024-11-24", "end_date": "2024-11-28", "movie_introduction": "장르 C 영화입니다.", "team_introduction": "좋은 팀입니다.", "budget_plan": "로케이션: 100만원", "is_appliable": true}}, {"model": "movies.movie", "pk": 4, "fields": {"user": 7, "genre": 4, "title": "열정적인 영화", "image": "images/default/thumbnail.png", "start_date": "2024-11-24", "end_date": "2024-11-28", "movie_introduction": "장르 D 영화입니다.", "team_introduction": "좋은 팀입니다.", "budget_plan": "로케이션: 100만원", "is_appliable": false}}, {"model": "movies.movie", "pk": 5, "fields": {"user": 8, "genre": 5, "title": "유머러스한 영화", "image": "images/default/thumbnail.png", "start_date": "2024-11-19", "end_date": "2024-11-29", "movie_introduction": "장르 E 영화입니다.", "team_introduction": "좋은 팀입니다.", "budget_plan": "로케이션: 100만원", "is_appliable": true}}, {"model": "movies.movie", "pk": 6, "fields": {"user": 4, "genre": 6, "title": "모험적인 영화", "image": "images/default/thumbnail.png", "start_date": "2024-11-19", "end_date": "2024-11-21", "movie_introduction": "장르 F 영화 입니다.", "team_introduction": "좋은 팀입니다.", "budget_plan": "로케이션: 100만원", "is_appliable": true}}, {"model": "movies.movie", "pk": 7, "fields": {"user": 5, "genre": 7, "title": "환상적인 영화", "image": "images/default/thumbnail.png", "start_date": "2024-11-19", "end_date": "2024-11-21", "movie_introduction": "장르 G 영화입니다.", "team_introduction": "좋은 팀입니다.", "budget_plan": "로케이션: 100만원", "is_appliable": true}}, {"model": "movies.movie", "pk": 8, "fields": {"user": 6, "genre": 8, "title": "강렬한 영화", "image": "images/default/thumbnail.png", "start_date": "2024-11-19", "end_date": "2024-11-20", "movie_introduction": "장르 H 영화입니다.", "team_introduction": "좋은 팀입니다.", "budget_plan": "로케이션: 100만원", "is_appliable": false}}]
+[
+{
+    "model": "movies.movie",
+    "pk": 1,
+    "fields": {
+        "user": 4,
+        "genre": 1,
+        "title": "A장르 영화",
+        "image": "movie_posters/정재현NCT_dsapLEO.jpg",
+        "start_date": "2024-11-01",
+        "end_date": "2024-11-23",
+        "target_amount": 10000000,
+        "movie_introduction": "정재현 짱",
+        "team_introduction": "",
+        "budget_plan": "",
+        "is_appliable": false
+    }
+},
+{
+    "model": "movies.movie",
+    "pk": 2,
+    "fields": {
+        "user": 5,
+        "genre": 2,
+        "title": "B장르 영화",
+        "image": "movie_posters/다운로드.jfif",
+        "start_date": "2024-11-01",
+        "end_date": "2024-11-08",
+        "target_amount": 1000000,
+        "movie_introduction": "청바지~",
+        "team_introduction": "",
+        "budget_plan": "",
+        "is_appliable": false
+    }
+},
+{
+    "model": "movies.movie",
+    "pk": 3,
+    "fields": {
+        "user": 4,
+        "genre": 1,
+        "title": "지ㅣㄴ짜",
+        "image": "movie_posters/Rectangle_12_NcYL64R.png",
+        "start_date": "2024-11-27",
+        "end_date": "2024-11-30",
+        "target_amount": 10001000,
+        "movie_introduction": "ㄹㄷㅈ",
+        "team_introduction": "1ㅂ21",
+        "budget_plan": "ㅈㄷㄹ",
+        "is_appliable": true
+    }
+}
+]
