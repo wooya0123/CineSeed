@@ -3,7 +3,7 @@
         <h1>회원가입</h1>
         <form @submit.prevent="signUp">
             <label for="profile_image">프로필 이미지</label><br>
-            <input type="file" id="profile_image"><br>
+            <input type="file" id="profile_image" @change="handleFileChange"><br>
             
             <label for="username">아이디</label><br>
             <input type="text" id="username" v-model.trim="username"><br>
@@ -19,10 +19,10 @@
 
             <label for="role">역할</label><br>
             <select id="role" v-model="role">
-                <option value="UN">미정</option>
-                <option value="DI">감독</option>
-                <option value="AC">배우</option>
-                <option value="ST">스태프</option>
+                <option value="미정">미정</option>
+                <option value="감독">감독</option>
+                <option value="배우">배우</option>
+                <option value="스탭">스탭</option>
             </select><br>
 
             <input type="text" id="email" placeholder="이메일" v-model="email"><br>
@@ -60,19 +60,29 @@ const instagram = ref('')
 const etc = ref('')
 const introduction = ref('')
 
-const signUp = function () {
-    const payload = {
-        username: username.value,
-        password1: password1.value,
-        password2: password2.value,
-        nickname: nickname.value,
-        role: role.value,
-        email: email.value,
-        instagram: instagram.value,
-        etc: etc.value,
-        introduction: introduction.value
+const handleFileChange = (event) => {
+    if (event.target.files.length > 0) {
+        profile_image.value = event.target.files[0] // 선택한 파일을 설정
+    } else {
+        profile_image.value = null // 파일이 없으면 null로 초기화
     }
-    store.signUp(payload)
+}
+
+const signUp = function () {
+    const formData = new FormData()
+    if (profile_image.value) {
+        formData.append('profile_image', profile_image.value)
+    }
+    formData.append('username', username.value)
+    formData.append('password1', password1.value)
+    formData.append('password2', password2.value)
+    formData.append('nickname', nickname.value)
+    formData.append('role', role.value)
+    formData.append('email', email.value)
+    formData.append('instagram', instagram.value)
+    formData.append('etc', etc.value)
+    formData.append('introduction', introduction.value)
+    store.signUp(formData)
 }
 </script>
 

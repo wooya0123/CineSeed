@@ -32,12 +32,13 @@ def game_result(request):
     # STEP 1.user에 title, genre를 설정
     # 받아온 결과 : g1c1aaaaa - g2c3bbbbb
     game_result = request.data.get('result')
-
-    genre_code = game_result[1] + game_result[4:7]    # 1aaa - 2bbb 형식으로 parsing
-    category_code = game_result[3] + game_result[7:]  # 1aa - 3bb 형식으로 parsing
+    
+    genre_code = game_result[1] + ('').join(game_result[4:7])    # 1aaa - 2bbb 형식으로 parsing
+    category_code = game_result[3] +('').join(game_result[7:])  # 1aa - 3bb 형식으로 parsing
 
     # 사용자 답변으로 genre_code 찾아주기 -> 아래 함수에서
     # 1aaa -> A로 바꿔주기
+    print(genre_code)
     genre_code = find_genre(genre_code)
 
     # user_genre에 Genre 객체 저장

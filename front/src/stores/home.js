@@ -14,7 +14,6 @@ export const useHomeStore = defineStore('home', () => {
       url: `${API_URL}/api/v1/movie/popular-recommandation/`
     })
       .then((response) => {
-        console.log(response)
         popularMovies.value = response.data
       })
       .catch((error) => {
@@ -35,7 +34,6 @@ export const useHomeStore = defineStore('home', () => {
         personalizedMovies.value = response.data
       })
       .catch((error) => {
-        console.log(token)
         console.log('로그인하지 않은 사용자입니다.')
       })
   }
