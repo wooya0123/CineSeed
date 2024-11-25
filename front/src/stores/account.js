@@ -144,5 +144,16 @@ export const useAccountStore = defineStore('account', () => {
               console.log(err)
             })
     }
+
+    // accountStore의 상태가 변경될 때 localStorage를 자동으로 갱신하도록 설정
+    watch(token, (newToken) => {
+        localStorage.setItem('user-token', newToken || '')
+        isLogIn.value = !!newToken;
+    })
+
+    watch(user, (newUser) => {
+        localStorage.setItem('user-info', JSON.stringify(newUser))
+    })
+
     return { API_URL, token, user, isLogIn, signUp, logIn, logOut }
 })

@@ -16,8 +16,9 @@
                 <img @click="selectMovie" :src="movies[movieIndex].source_b" alt="영화b" id="movie_b">
             </div>
         </div>
-        <div v-else>
+        <div v-if="movies && movieIndex >= movies.length">
             <h2>취향 분석이 완료되었습니다.</h2>
+            <h3>{{ userTitle }}</h3>
             <p @click="goHome">홈으로 가서 내 취향 맞춤 펀딩 둘러보기</p>
         </div>
     </div>
@@ -41,62 +42,64 @@ const movieIndex = ref(0)
 const router = useRouter()
 const accountStore = useAccountStore()
 
+const userTitle = ref(null)
+
 // 게임을 시작할 때, 게임 질문 가져오기
- onMounted(() => {
-    axios({
-        method: 'get',
-        url: `${API_URL}/api/v1/game/setting/`,
-        headers: {
-            Authorization: `Token ${accountStore.token}`
+onMounted(() => {
+axios({
+    method: 'get',
+    url: `${API_URL}/api/v1/game/setting/`,
+    headers: {
+        Authorization: `Token ${accountStore.token}`
+    }
+})
+    .then((res) => {
+        result.value = res.data.type.split('') // 문제 코드 리스트로 변환 후 저장
+        
+        questions.value = [
+            {
+                text: res.data.question1_text,
+                a: res.data.question1_a,
+                b: res.data.question1_b,
+            },
+            {
+                text: res.data.question2_text,
+                a: res.data.question2_a,
+                b: res.data.question2_b,
+            },
+            {
+                text: res.data.question3_text,
+                a: res.data.question3_a,
+                b: res.data.question3_b,
+            },
+            {
+                text: res.data.question4_text,
+                a: res.data.question4_a,
+                b: res.data.question4_b,
+            },
+            {
+                text: res.data.question5_text,
+                a: res.data.question5_a,
+                b: res.data.question5_b,
+            },
+        ]
+    })
+    .catch((err) => {
+        console.log(err.status) 
+        if (err.status === 401) {      
+            alert('로그인한 회원만 참여 가능합니다.')
+            console.log(accountStore.token.value) 
+            router.push({ name : 'login'})
         }
     })
-        .then((res) => {
-            result.value = res.data.type.split('') // 문제 코드 리스트로 변환 후 저장
-            
-            questions.value = [
-                {
-                    text: res.data.question1_text,
-                    a: res.data.question1_a,
-                    b: res.data.question1_b,
-                },
-                {
-                    text: res.data.question2_text,
-                    a: res.data.question2_a,
-                    b: res.data.question2_b,
-                },
-                {
-                    text: res.data.question3_text,
-                    a: res.data.question3_a,
-                    b: res.data.question3_b,
-                },
-                {
-                    text: res.data.question4_text,
-                    a: res.data.question4_a,
-                    b: res.data.question4_b,
-                },
-                {
-                    text: res.data.question5_text,
-                    a: res.data.question5_a,
-                    b: res.data.question5_b,
-                },
-            ]
-        })
-        .catch((err) => {
-            console.log(err.status) 
-            if (err.status === 401) {      
-                alert('로그인한 회원만 참여 가능합니다.')
-                console.log(accountStore.token.value) 
-                router.push({ name : 'login'})
-            }
-        })
- })
+})
 
 
 // 문제 하나 지나갈 때마다 결과에 추가
- const selectAnswer = function (answer) {
+const selectAnswer = function (answer) {
     result.value.push(answer)
     questionIndex.value++
- } 
+} 
 
 // 질문이 끝나면 데이터를 가져오기
 const setMovieRound = function () {
@@ -111,6 +114,7 @@ const setMovieRound = function () {
         }
     })
         .then((res) => {
+            getUserId()
             movies.value = [
                 {
                     title_a: res.data[0].title,
@@ -143,10 +147,12 @@ const setMovieRound = function () {
                     source_b: res.data[9].image,
                 }
             ]
-            console.log(movies.value)
+
+            // Optional: 상태 변경 이후 `localStorage` 강제 갱신 (필요한 경우)
+            localStorage.setItem('user-info', JSON.stringify(accountStore.user))
         })
         .catch((err) => {
-            console.log(err.status) 
+            console.log(err) 
             if (err.status === 401) {      
                 alert('로그인한 회원만 참여 가능합니다.')
                 console.log(accountStore.token.value) 
@@ -155,10 +161,57 @@ const setMovieRound = function () {
         })
 }
 
+// 칭호 저장하기 step 1. pk 가져오기
+const getUserId = function () {
+    axios({
+        method: 'get',
+        url: `${API_URL}/accounts/user/`,
+        headers: {
+            Authorization: `Token ${accountStore.token}`
+        },
+    })
+        .then((res) => {
+            const id = ref(res.data.pk)
+            getUserTitle(id.value)
+
+            // Optional: 사용자 ID 변경 시 동기화
+            accountStore.user = { ...accountStore.user, id }
+            localStorage.setItem('user-info', JSON.stringify(accountStore.user))
+        })
+        .catch((err) => {
+            console.error(err)
+        })
+}
+
+
+// 칭호 저장하기 step 2. title 가져오기
+const getUserTitle = function(id) {
+    axios({
+        method: 'get',
+        url: `${API_URL}/api/v1/profile/${id}/`,
+        headers: {
+            Authorization: `Token ${accountStore.token}`
+        }
+    })
+        .then((res) => {
+            console.log(res.data)
+            userTitle.value = res.data.title
+
+            // Optional: 칭호 업데이트 시 동기화
+            accountStore.user = { ...accountStore.user, title: res.data.title }
+            localStorage.setItem('user-info', JSON.stringify(accountStore.user))
+        })
+        .catch((err) => {
+            console.error(err)
+        })
+}
+
+
 // `watch`로 questionIndex가 끝났는지 감지
 watch(questionIndex, (newValue, oldValue) => {
     if (questions.value && newValue >= questions.value.length) {
-    setMovieRound();
+        // userTitle.value = accountStore.profile.title
+        setMovieRound()
   }
 })
 
@@ -169,7 +222,7 @@ const selectMovie = function () {
 
 // 홈으로 돌아가기
 const goHome = function () {
-    // router.push({ name: 'home' })
+    router.push({ name: 'home' })
 }
 </script>
 

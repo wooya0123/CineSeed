@@ -38,15 +38,24 @@ def game_result(request):
 
     # 사용자 답변으로 genre_code 찾아주기 -> 아래 함수에서
     # 1aaa -> A로 바꿔주기
-    print(genre_code)
     genre_code = find_genre(genre_code)
 
     # user_genre에 Genre 객체 저장
     user_genre = Genre.objects.get(code=genre_code)
 
+    genre_names = {
+        'A': '낭만적인',
+        'B': '감성적인',
+        'C': '분석적인',
+        'D': '열정적인',
+        'E': '유머러스한',
+        'F': '모험적인',
+        'G': '환상적인',
+        'H': '강렬한'
+    }
     # genre_code로 genre_name 찾아주기 -> genre 모델에서
     # A로 '낭만적인' 찾아오기
-    genre_name = user_genre.name
+    genre_name = genre_names.get(genre_code)
     # 사용자 답변으로 분류(평론가 등) 찾아주기
     # 1aa로 '트랜드 리더' 찾아오기
     category_name = find_category(category_code)
