@@ -17,10 +17,12 @@
     <form @submit.prevent="logOut" v-show="account.isLogIn">
       <input type="submit" value="로그아웃">
     </form>
-
-    <RouterView />
+    
   </div>
-  
+  <div>
+    <RouterLink :to="{ name : 'game' }">영화 취향 분석</RouterLink>
+  </div>
+  <RouterView />
 </template>
 
 <script setup>

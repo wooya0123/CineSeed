@@ -1,3 +1,4 @@
+import BaseGameView from '@/views/BaseGameView.vue'
 import LogInView from '@/views/LogInView.vue'
 import SignUpView from '@/views/SignUpView.vue'
 import BaseHomeView from '@/views/BaseHomeView.vue'
@@ -53,7 +54,11 @@ const router = createRouter({
       path: '/movies/:id/edit',
       name: 'movieEdit',
       component: MovieEditView,
-    }
+    },
+      path: '/game',
+      name: 'game',
+      component: BaseGameView
+    },
   ],
 })
 
