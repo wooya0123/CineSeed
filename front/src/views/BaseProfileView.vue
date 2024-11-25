@@ -3,7 +3,7 @@
     <div class="info">
       <img class="user_image" :src="`${account.API_URL}${account.user.profile_image}`" alt="">
       <p v-if="account.user.title && account.user.title != 'null'">{{ account.user.title }}</p>
-      <a v-else href="">취향 테스트를 해보세요!</a>
+      <a v-else @click="playGame">취향 테스트를 해보세요!</a>
     </div>
     
     <div class="contact">
@@ -65,6 +65,12 @@
 import MovieCarousel from '@/components/MovieCarousel.vue';
 
 import { useAccountStore } from '@/stores/account';
+import { useRouter } from 'vue-router/dist/vue-router';
+
+const router = useRouter()
+const playGame = function () {
+  router.push({name : 'game'})
+}
 
 const account = useAccountStore()
 const nickname = account.user.nickname

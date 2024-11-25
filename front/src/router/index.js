@@ -55,11 +55,12 @@ const router = createRouter({
       name: 'movieEdit',
       component: MovieEditView,
     },
+    {
       path: '/game',
       name: 'game',
       component: BaseGameView
     },
-  ],
+  ]
 })
 
 // 네비게이션 가드 추가
