@@ -147,6 +147,9 @@ const setMovieRound = function () {
                     source_b: res.data[9].image,
                 }
             ]
+
+            // Optional: 상태 변경 이후 `localStorage` 강제 갱신 (필요한 경우)
+            localStorage.setItem('user-info', JSON.stringify(accountStore.user))
         })
         .catch((err) => {
             console.log(err) 
@@ -170,6 +173,10 @@ const getUserId = function () {
         .then((res) => {
             const id = ref(res.data.pk)
             getUserTitle(id.value)
+
+            // Optional: 사용자 ID 변경 시 동기화
+            accountStore.user = { ...accountStore.user, id }
+            localStorage.setItem('user-info', JSON.stringify(accountStore.user))
         })
         .catch((err) => {
             console.error(err)
@@ -189,6 +196,10 @@ const getUserTitle = function(id) {
         .then((res) => {
             console.log(res.data)
             userTitle.value = res.data.title
+
+            // Optional: 칭호 업데이트 시 동기화
+            accountStore.user = { ...accountStore.user, title: res.data.title }
+            localStorage.setItem('user-info', JSON.stringify(accountStore.user))
         })
         .catch((err) => {
             console.error(err)
@@ -211,7 +222,7 @@ const selectMovie = function () {
 
 // 홈으로 돌아가기
 const goHome = function () {
-    // router.push({ name: 'home' })
+    router.push({ name: 'home' })
 }
 </script>
 
