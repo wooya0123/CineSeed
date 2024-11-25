@@ -31,14 +31,14 @@
       <RouterLink :to="{ name : 'home' }" class="menu-text menu-text:hover menu-text:focus">홈</RouterLink>
     </div>
     <div class="menu-text-container">
-      <RouterLink :to="{ name : 'movies' }" class="menu-text menu-text:hover menu-text:focus">영화</RouterLink> |
+      <RouterLink :to="{ name : 'movies' }" class="menu-text menu-text:hover menu-text:focus">영화</RouterLink>
     </div>
     <div class="menu-text-container">
       <RouterLink :to="{ name : 'game' }" class="menu-text menu-text:hover menu-text:focus">영화 취향 분석</RouterLink>
     </div>
   </div>
 
-  <RouterView />
+  <RouterView class="container"/>
 </template>
 
 <script setup>
@@ -58,6 +58,12 @@ const goHome = function () {
 </script>
 
 <style scoped>
+.container {
+  width: 1440px;
+  padding-left: 140px;
+  padding-right: 140px;
+  margin: 0px;
+}
 .top-nav {
   height:48px;
   padding-left:60px;
