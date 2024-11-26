@@ -1,7 +1,5 @@
 <template>
   <div class="carousel-wrapper">
-    <!-- 왼쪽 네비게이션 버튼 -->
-    <button class="custom-prev" @click="prevSlide">‹</button>
     <Carousel class="movie-carousel" v-bind="config">
       <Slide v-for="movie in movies" :key="movie.id">
         <MovieCard
