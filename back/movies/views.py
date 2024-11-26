@@ -126,24 +126,24 @@ def application(request, movie_id):
     movie = Movie.objects.get(id=movie_id)
 
     # 감독이 아니면, 테이블에 데이터 저장, 지원하면 취소는 불가
-    if user.role != '감독':
-        if user in movie.apply_users.all():
-            is_applied = True
-            pass
-        else:
-            movie.apply_users.add(user)
-            is_applied = True
-
-        result = {
-            'message': '지원 완료',
-            'is_applied': is_applied
-        }
-        return Response(result)
+    # if user.role = '감독':
+    if user in movie.apply_users.all():
+        pass
     else:
+        movie.apply_users.add(user)
+        is_applied = True
         result = {
-            'message': '권한이 없습니다'
+        'message': '지원 완료',
+        'is_applied': is_applied
         }
         return Response(result)
+
+        
+    # else:
+    #     result = {
+    #         'message': '권한이 없습니다'
+    #     }
+    #     return Response(result)
 
 @api_view(['GET'])
 def popular_recommandation(request):
