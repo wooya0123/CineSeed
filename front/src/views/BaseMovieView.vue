@@ -3,7 +3,7 @@
       
       <div class="header">
         <h1>영화 목록</h1>
-        <RouterLink class="create-button" :to="{ name : 'movieCreate' }">글쓰기</RouterLink>
+        <RouterLink class="create-button" :to="{ name : 'movieCreate' }">등록하기</RouterLink>
       </div>
       
 

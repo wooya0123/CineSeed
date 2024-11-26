@@ -78,10 +78,15 @@
         <p>{{ movie.team_introduction }}</p>
       </section>
       <hr>
-      <div class="detail-button" v-show="account.isLogIn">
+      <div v-if="account.isLogIn">
         <!-- <button class="apply-button bg-primary white" v-if="account.user.id === movie.user" @click="updateMovie">수정하기</button> -->
-        <button class="apply-button bg-primary white" v-if="!movie.apply_users.includes(account.user.id)" @click="movieApply">크루로 지원하기</button>
-        <button class="apply-button bg-gray1 gray3" v-else>지원완료(비활성)</button>
+        <div class="detail-button" v-if="movie.is_appliable">
+          <button class="apply-button bg-primary white" v-if="!movie.apply_users.includes(account.user.id)" @click="movieApply">크루로 지원하기</button>
+          <button class="apply-button bg-gray1 gray3" v-else>지원완료</button>
+        </div>
+        <div class="detail-button" v-else>
+          <button class="apply-button bg-gray1 gray3">지원 불가</button>
+        </div>
       </div>
     </body>
   </div>
@@ -362,7 +367,6 @@ watch(route, (newRoute) => {
 
 
 .detail-button {
-  width: 100%; /* 버튼의 너비를 로 설정 */
   display: flex;
   justify-content: center; /* 버튼을 가운데 정렬 */
   margin-top: 20px; /* 상단 여백 추가 */

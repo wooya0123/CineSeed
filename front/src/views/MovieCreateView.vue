@@ -75,7 +75,7 @@
             </div>
           </div>
           
-          <button class="create-btn bg-primary white" style="margin-top: 30px;" type="submit">생성하기</button>
+          <button class="create-btn bg-primary white" style="margin-top: 30px;" type="submit">등록하기</button>
     </form>
     
 
