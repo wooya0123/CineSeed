@@ -236,22 +236,5 @@
         "budget_plan": "",
         "is_appliable": false
     }
-},
-{
-    "model": "movies.movie",
-    "pk": 18,
-    "fields": {
-        "user": 27,
-        "genre": 1,
-        "title": "사랑을 보다",
-        "image": "movie_posters/사랑을보다.PNG",
-        "start_date": "2024-11-27",
-        "end_date": "2025-02-07",
-        "target_amount": 500000,
-        "movie_introduction": "시놉시스\r\n극영화 '사랑을 보다' 는 청각장애인 부모의 자녀(코다)와 함께 살아가는 청각장애인 엄마의 삶과 마음을 들여다보는 이야기\r\n\r\n연출의도\r\n농인과 청인 구분 없이 누가 관람하더라도 이 영화가 의미하는 바를 이해할 수 있도록 영화를 기획하였으며 영화는 자막과 음성 함께 들어갑니다. 이 영화를 통해 문화예술에는 장애의 구분이 없다는 점을 관객들에게 전달하고 싶었습니다.",
-        "team_introduction": "",
-        "budget_plan": "",
-        "is_appliable": false
-    }
 }
 ]
