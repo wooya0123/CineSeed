@@ -1,0 +1,50 @@
+[
+{
+    "model": "accounts.applymovie",
+    "pk": 1,
+    "fields": {
+        "user": 21,
+        "movie": 13
+    }
+},
+{
+    "model": "accounts.applymovie",
+    "pk": 2,
+    "fields": {
+        "user": 16,
+        "movie": 9
+    }
+},
+{
+    "model": "accounts.applymovie",
+    "pk": 3,
+    "fields": {
+        "user": 16,
+        "movie": 10
+    }
+},
+{
+    "model": "accounts.applymovie",
+    "pk": 4,
+    "fields": {
+        "user": 17,
+        "movie": 9
+    }
+},
+{
+    "model": "accounts.applymovie",
+    "pk": 5,
+    "fields": {
+        "user": 17,
+        "movie": 21
+    }
+},
+{
+    "model": "accounts.applymovie",
+    "pk": 6,
+    "fields": {
+        "user": 12,
+        "movie": 10
+    }
+}
+]

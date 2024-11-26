@@ -1,0 +1,326 @@
+[
+{
+    "model": "accounts.fundmovie",
+    "pk": 1,
+    "fields": {
+        "user": 16,
+        "movie": 9,
+        "amount": 1000000
+    }
+},
+{
+    "model": "accounts.fundmovie",
+    "pk": 2,
+    "fields": {
+        "user": 17,
+        "movie": 9,
+        "amount": 430000
+    }
+},
+{
+    "model": "accounts.fundmovie",
+    "pk": 3,
+    "fields": {
+        "user": 17,
+        "movie": 4,
+        "amount": 310000
+    }
+},
+{
+    "model": "accounts.fundmovie",
+    "pk": 4,
+    "fields": {
+        "user": 17,
+        "movie": 10,
+        "amount": 230000
+    }
+},
+{
+    "model": "accounts.fundmovie",
+    "pk": 5,
+    "fields": {
+        "user": 17,
+        "movie": 17,
+        "amount": 20000
+    }
+},
+{
+    "model": "accounts.fundmovie",
+    "pk": 6,
+    "fields": {
+        "user": 18,
+        "movie": 9,
+        "amount": 510000
+    }
+},
+{
+    "model": "accounts.fundmovie",
+    "pk": 7,
+    "fields": {
+        "user": 18,
+        "movie": 8,
+        "amount": 420000
+    }
+},
+{
+    "model": "accounts.fundmovie",
+    "pk": 8,
+    "fields": {
+        "user": 18,
+        "movie": 11,
+        "amount": 20000
+    }
+},
+{
+    "model": "accounts.fundmovie",
+    "pk": 9,
+    "fields": {
+        "user": 18,
+        "movie": 13,
+        "amount": 20000
+    }
+},
+{
+    "model": "accounts.fundmovie",
+    "pk": 10,
+    "fields": {
+        "user": 18,
+        "movie": 19,
+        "amount": 30000
+    }
+},
+{
+    "model": "accounts.fundmovie",
+    "pk": 11,
+    "fields": {
+        "user": 2,
+        "movie": 9,
+        "amount": 200000
+    }
+},
+{
+    "model": "accounts.fundmovie",
+    "pk": 12,
+    "fields": {
+        "user": 2,
+        "movie": 4,
+        "amount": 200000
+    }
+},
+{
+    "model": "accounts.fundmovie",
+    "pk": 13,
+    "fields": {
+        "user": 2,
+        "movie": 8,
+        "amount": 200000
+    }
+},
+{
+    "model": "accounts.fundmovie",
+    "pk": 14,
+    "fields": {
+        "user": 2,
+        "movie": 10,
+        "amount": 200000
+    }
+},
+{
+    "model": "accounts.fundmovie",
+    "pk": 15,
+    "fields": {
+        "user": 2,
+        "movie": 13,
+        "amount": 110000
+    }
+},
+{
+    "model": "accounts.fundmovie",
+    "pk": 16,
+    "fields": {
+        "user": 2,
+        "movie": 15,
+        "amount": 10000
+    }
+},
+{
+    "model": "accounts.fundmovie",
+    "pk": 17,
+    "fields": {
+        "user": 2,
+        "movie": 23,
+        "amount": 10000
+    }
+},
+{
+    "model": "accounts.fundmovie",
+    "pk": 18,
+    "fields": {
+        "user": 2,
+        "movie": 25,
+        "amount": 20000
+    }
+},
+{
+    "model": "accounts.fundmovie",
+    "pk": 19,
+    "fields": {
+        "user": 12,
+        "movie": 9,
+        "amount": 440000
+    }
+},
+{
+    "model": "accounts.fundmovie",
+    "pk": 20,
+    "fields": {
+        "user": 12,
+        "movie": 10,
+        "amount": 110000
+    }
+},
+{
+    "model": "accounts.fundmovie",
+    "pk": 21,
+    "fields": {
+        "user": 12,
+        "movie": 12,
+        "amount": 200000
+    }
+},
+{
+    "model": "accounts.fundmovie",
+    "pk": 22,
+    "fields": {
+        "user": 12,
+        "movie": 11,
+        "amount": 200000
+    }
+},
+{
+    "model": "accounts.fundmovie",
+    "pk": 23,
+    "fields": {
+        "user": 12,
+        "movie": 18,
+        "amount": 20000
+    }
+},
+{
+    "model": "accounts.fundmovie",
+    "pk": 24,
+    "fields": {
+        "user": 12,
+        "movie": 31,
+        "amount": 10000
+    }
+},
+{
+    "model": "accounts.fundmovie",
+    "pk": 25,
+    "fields": {
+        "user": 12,
+        "movie": 20,
+        "amount": 20000
+    }
+},
+{
+    "model": "accounts.fundmovie",
+    "pk": 26,
+    "fields": {
+        "user": 13,
+        "movie": 15,
+        "amount": 110000
+    }
+},
+{
+    "model": "accounts.fundmovie",
+    "pk": 27,
+    "fields": {
+        "user": 13,
+        "movie": 9,
+        "amount": 200000
+    }
+},
+{
+    "model": "accounts.fundmovie",
+    "pk": 28,
+    "fields": {
+        "user": 13,
+        "movie": 13,
+        "amount": 140000
+    }
+},
+{
+    "model": "accounts.fundmovie",
+    "pk": 29,
+    "fields": {
+        "user": 13,
+        "movie": 21,
+        "amount": 300000
+    }
+},
+{
+    "model": "accounts.fundmovie",
+    "pk": 30,
+    "fields": {
+        "user": 13,
+        "movie": 25,
+        "amount": 210000
+    }
+},
+{
+    "model": "accounts.fundmovie",
+    "pk": 31,
+    "fields": {
+        "user": 13,
+        "movie": 11,
+        "amount": 40000
+    }
+},
+{
+    "model": "accounts.fundmovie",
+    "pk": 32,
+    "fields": {
+        "user": 3,
+        "movie": 10,
+        "amount": 110000
+    }
+},
+{
+    "model": "accounts.fundmovie",
+    "pk": 33,
+    "fields": {
+        "user": 3,
+        "movie": 9,
+        "amount": 330000
+    }
+},
+{
+    "model": "accounts.fundmovie",
+    "pk": 34,
+    "fields": {
+        "user": 3,
+        "movie": 14,
+        "amount": 110000
+    }
+},
+{
+    "model": "accounts.fundmovie",
+    "pk": 35,
+    "fields": {
+        "user": 3,
+        "movie": 32,
+        "amount": 200000
+    }
+},
+{
+    "model": "accounts.fundmovie",
+    "pk": 36,
+    "fields": {
+        "user": 3,
+        "movie": 30,
+        "amount": 100000
+    }
+}
+]
