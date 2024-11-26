@@ -1,7 +1,7 @@
 <template>
   <nav class="top-nav bg-gray6">
     <a class="logo" @click="goHome">
-        <img src="" alt="logo" width="30" height="24">
+        <img src="/src/assets/cineseed.svg" alt="logo" width="30" height="24">
     </a>
     <div class="account-area caption">
       <span v-if="!account.isLogIn">
