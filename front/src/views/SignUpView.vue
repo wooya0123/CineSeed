@@ -131,7 +131,7 @@ const signUp = function () {
   width: 100%;
   margin-bottom: 18px;
   padding: 16px;
-  border: 1px solid #ccc;
+  border: 1px solid #D0D5DA;
   border-radius: 5px;
   font-size: 15px;
 }
@@ -140,12 +140,6 @@ const signUp = function () {
   color: #999999;
   font-size:15px;
 }
-
-.profile-image {
-
-}
-
-
 
 .signup-btn {
   width: 100%;

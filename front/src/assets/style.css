@@ -172,7 +172,7 @@ h3 {
   width: 100%;
   margin-bottom: 18px;
   padding: 12px;
-  border: 1px solid #ccc;
+  border: 1px solid #D0D5DA;
   border-radius: 5px;
   font-size: 18px;
   text-indent: 10px;
@@ -182,4 +182,25 @@ h3 {
   color: #cfcfcf;
   font-size:15px;
   text-indent: 10px;
+}
+
+.input-black-label {
+  display: block;
+  margin-bottom: 4px;
+  font-size: 20px;
+}
+
+.input-black {
+  background-color: #4B5055;
+  color: #F5FAFF;
+  width: 100%;
+  margin: 18px 0;
+  padding: 12px;
+  border: #4B5055;
+  border-radius: 5px;
+  box-sizing: border-box;
+}
+
+.input-black::placeholder {
+  color: #9BA0A5;
 }
