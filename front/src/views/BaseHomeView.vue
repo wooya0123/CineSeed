@@ -9,10 +9,9 @@
       <MovieCarousel :movies="home.popularMovies"/>
     </section>
 
-    <!-- 로그인 했을 때 보이는 섹션 -->
-    <section v-if="account.isLogIn">
+    <section>
       <!-- 취향 토너먼트 게임 진행 완료 시 -->
-      <div v-if="account.user.title">
+      <div v-if="account.user && account.user.title">
         <h2>{{ account.user.nickname }}님 취향과 비슷한 펀딩</h2>
         <MovieCarousel :movies="home.personalizedMovies"/>
       </div>

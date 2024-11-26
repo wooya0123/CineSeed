@@ -133,7 +133,7 @@ const signUp = function () {
   padding: 16px;
   border: 1px solid #D0D5DA;
   border-radius: 5px;
-  font-size: 15px;
+  font-size: 20px;
 }
 
 .role-dropdown option {

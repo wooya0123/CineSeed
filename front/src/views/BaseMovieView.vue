@@ -1,6 +1,12 @@
 <template>
   <div>
-    <h1>영화 목록</h1>
+      
+      <div class="header">
+        <h1>영화 목록</h1>
+        <RouterLink class="create-button" :to="{ name : 'movieCreate' }">글쓰기</RouterLink>
+      </div>
+      
+
     <div class="movie-card-container">
       <RouterLink
       v-for="movie in movies"
@@ -12,7 +18,7 @@
     </RouterLink>
     </div>
     
-    <RouterLink :to="{ name : 'movieCreate' }">글쓰기</RouterLink>
+    
 
     <RouterView />
   </div>
@@ -44,6 +50,22 @@ onMounted(() => {
 </script>
 
 <style scoped>
+.header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.create-button {
+  margin-left: auto; /* 링크를 오른쪽 끝으로 배치 */
+  background-color: #FB4CA1;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 5px;
+  text-decoration: none;
+  cursor: pointer;
+}
+
 .movie-card-container {
   display: flex;
   flex-wrap: wrap;
