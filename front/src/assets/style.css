@@ -1,7 +1,7 @@
 /* [1] Typography 설정 */
 /* Regular (기본) */
 @font-face {
-  font-family: 'Pretendard';
+  font-family: 'Pretendard-Regular';
   src: url('https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
   font-weight: 400; /* Regular */
   font-style: normal;
@@ -9,7 +9,7 @@
 
 /* Medium */
 @font-face {
-  font-family: 'Pretendard';
+  font-family: 'Pretendard-Medium';
   src: url('https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Medium.woff') format('woff');
   font-weight: 500; /* Medium */
   font-style: normal;
@@ -17,7 +17,7 @@
 
 /* Semi-Bold */
 @font-face {
-  font-family: 'Pretendard';
+  font-family: 'Pretendard-SemiBold';
   src: url('https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-SemiBold.woff') format('woff');
   font-weight: 600; /* Semi-Bold */
   font-style: normal;
@@ -25,7 +25,7 @@
 
 /* Bold */
 @font-face {
-  font-family: 'Pretendard';
+  font-family: 'Pretendard-Bold';
   src: url('https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Bold.woff') format('woff');
   font-weight: 700; /* Bold */
   font-style: normal;
@@ -33,14 +33,14 @@
 
 /* 루트에서 기본 폰트 크기 설정 */
 html {
+    font-family: 'Pretendard-Regular', 'Pretendard-Medium', 'Pretendard-SemiBold', 'Pretendard-Bold', sans-serif;
     font-size: 16px; /* 기본 폰트 크기 16px */
 }
 
 /* body 폰트 크기 */
 body {
-    font-family: 'Pretendard', sans-serif;
+    font-family: 'Pretendard-Regular', sans-serif;
     font-size: 1rem;  /* 1rem은 16px (기본 설정) */
-    font-weight: 400;
     line-height: 1.5;
     letter-spacing: normal;
     color: #F5FAFF;
@@ -49,36 +49,32 @@ body {
 
 /* h1 폰트 크기 */
 h1 {
-    font-family: 'Pretendard', sans-serif;
+    font-family: 'Pretendard-Medium', sans-serif;
     font-size: 2rem;  /* 2rem은 32px */
-    font-weight: 700;
 }
 
 /* h2 폰트 크기 */
 h2 {
-    font-family: 'Pretendard', sans-serif;
+    font-family: 'Pretendard-Bold', sans-serif;
     font-size: 1.75rem;  /* 1.75rem은 28px */
-    font-weight: 700;
 }
 
 /* h3 폰트 크기 */
 h3 {
-    font-family: 'Pretendard', sans-serif;
+    font-family: 'Pretendard-Bold', sans-serif;
     font-size: 1.5rem;  /* 1.5rem은 24px */
-    font-weight: 700;
 }
 
 /* body_bold 용 class */
 .bold {
+  font-family: 'Pretendard-Bold', sans-serif;
   font-size: 1.125rem;
-  font-weight: 600;
 }
 
 /* caption용 class */
 .caption {
-  font-family: 'Pretendard', sans-serif;
+  font-family: 'Pretendard-Regular', sans-serif;
   font-size: 0.75rem;  /* 0.75rem은 12px */
-  font-weight: 400;
 }
 
 /* [3] color 설정 */
@@ -153,11 +149,11 @@ h3 {
   box-sizing: border-box;
 }
 
-@media (max-width: 768px) {
+/* @media (max-width: 768px) {
   .container {
     padding: 36px 20px;
   }
-}
+} */
 
 /* btn */
 .btn-lg {
