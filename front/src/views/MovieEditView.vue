@@ -1,6 +1,5 @@
 <template>
   <div v-if="movie">
-    {{ movie }}
     <h1>영화 수정하기</h1>
     <form @submit.prevent="updateMovie">
       <header>

@@ -1,51 +1,54 @@
 <template>
-    <div v-show="!store.isLogIn">
-        <h1>회원가입</h1>
-        <form @submit.prevent="signUp">
-            <label for="profile_image">프로필 이미지</label><br>
-            <input type="file" id="profile_image" @change="handleFileChange"><br>
-            
-            <label for="username">아이디</label><br>
-            <input type="text" id="username" v-model.trim="username"><br>
+    <div class="signup-body"  v-show="!isSignup">
+        <div class="signup-container" v-show="!store.isLogIn">
+            <h1>회원가입</h1>
+            <form class="signup-form" @submit.prevent="signUp">
+                <!-- <label for="profile_image">프로필 이미지</label><br>
+                <input class="profile-image" type="file" id="profile_image" @change="handleFileChange"><br> -->
+                
+                <label for="username"></label>
+                <input class="input-white" type="text" id="username" v-model.trim="username" placeholder="아이디">
 
-            <label for="password1">비밀번호</label><br>
-            <input type="password" id="password1" v-model.trim="password1"><br>
+                <label for="password1"></label>
+                <input class="input-white" type="password" id="password1" v-model.trim="password1" placeholder="비밀번호">
 
-            <label for="password2">비밀번호 확인</label><br>
-            <input type="password" id="password2" v-model.trim="password2"><br>
+                <label for="password2"></label>
+                <input class="input-white" type="password" id="password2" v-model.trim="password2" placeholder="비밀번호 확인">
 
-            <label for="nickname">닉네임</label><br>
-            <input type="text" id="nickname" v-model.trim="nickname"><br>
+                <label for="nickname"></label>
+                <input class="input-white" type="text" id="nickname" v-model.trim="nickname" placeholder="닉네임">
 
-            <label for="role">역할</label><br>
-            <select id="role" v-model="role">
-                <option value="미정">미정</option>
-                <option value="감독">감독</option>
-                <option value="배우">배우</option>
-                <option value="스탭">스탭</option>
-            </select><br>
+                <label for="role"></label>
+                <select class="role-dropdown" id="role" v-model="role">
+                    <option value="포지션을 선택해주세요" disabled selected>포지션을 선택해주세요</option>
+                    <option value="미정">미정</option>
+                    <option value="감독">감독</option>
+                    <option value="배우">배우</option>
+                    <option value="스탭">스탭</option>
+                </select>
 
-            <input type="text" id="email" placeholder="이메일" v-model="email"><br>
+                <input class="input-white" type="text" id="email" placeholder="이메일" v-model="email">
 
-            <input type="text" id="instagram" placeholder="인스타그램" v-model="instagram"><br>
+                <p>연락처</p>
+                <span class="caption">프로필 페이지에서 다른사람에게 노출이 돼요</span>
 
-            <input type="text" id="etc" placeholder="기타" v-model="etc"><br>
+                <input class="input-white" type="text" id="instagram" placeholder="인스타그램" v-model="instagram">
 
-            <label for="introduction">자기소개</label><br>
-            <input type="textarea" id="introduction" v-model="introduction"><br>
+                <input class="input-white" type="text" id="etc" placeholder="기타 (ex. 메일, 휴대폰 번호)" v-model="etc">
+                
 
-            <button>회원가입</button>
-        </form>
-    </div>
-    <div v-show="store.isLogIn">
-        <SignUpComplete />
+                <!-- <label for="introduction">자기소개</label><br>
+                <input type="textarea" id="introduction" v-model="introduction"><br> -->
+
+                <button class="signup-btn bg-primary white">회원가입</button>
+            </form>
+        </div>
     </div>
 </template>
 
 <script setup>
 import { ref } from 'vue'
 import { useAccountStore } from '@/stores/account'
-import SignUpComplete from '@/components/SignUpComplete.vue'
 
 const store = useAccountStore()
 
@@ -54,7 +57,7 @@ const username = ref(null)
 const password1 = ref(null)
 const password2 = ref(null)
 const nickname = ref(null)
-const role = ref(null)
+const role = ref("포지션을 선택해주세요")
 const email = ref(null)
 const instagram = ref('')
 const etc = ref('')
@@ -83,9 +86,73 @@ const signUp = function () {
     formData.append('etc', etc.value)
     formData.append('introduction', introduction.value)
     store.signUp(formData)
-}
+  }
 </script>
 
 <style scoped>
+.signup-body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 105vh;
+  padding: 150px;
+}
 
+.signup-container {
+  width: 500px;
+  padding: 50px;
+  background-color: #F5FAFF;
+  border-radius: 10px;
+  text-align: left;
+}
+
+.signup-container h1 {
+  color: #333;
+  margin-top: 50px;
+}
+
+.signup-form {
+  margin-top: 50px;
+  margin-bottom: 20px;
+}
+
+.signup-form p {
+  color: #333;
+  margin: 0;
+  /* margin-top: 0px;
+  margin-bottom: 15px; */
+}
+
+.signup-form span {
+  color: #333;
+}
+
+.role-dropdown {
+  width: 100%;
+  margin-bottom: 18px;
+  padding: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 15px;
+}
+
+.role-dropdown option {
+  color: #999999;
+  font-size:15px;
+}
+
+.profile-image {
+
+}
+
+
+
+.signup-btn {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
 </style>

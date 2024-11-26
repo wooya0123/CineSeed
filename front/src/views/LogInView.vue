@@ -1,19 +1,20 @@
 <template>
-    <div>
+    <div class="login-body">
+      <div class="login-container bg-gray1 ">
         <h1>로그인</h1>
-        <form @submit.prevent="logIn">
-            <label for="username">아이디</label><br>
-            <input type="text" id="username" v-model.trim="username"><br>
+        <form class="login-form" @submit.prevent="logIn">
+            <label for="username"></label>
+            <input class="input-white" type="text" id="username" v-model.trim="username" placeholder="아이디"><br>
 
-            <label for="password">비밀번호</label><br>
-            <input type="password" id="password1" v-model.trim="password"><br>
-            <p>비밀번호 생성 조건</p>
-
-            <button>로그인</button>
+            <label for="password"></label>
+            <input class="input-white" type="password" id="password1" v-model.trim="password" placeholder="비밀번호"><br>
+            <button class="login-btn btn-lg bg-primary white">로그인</button>
             <hr>
             <p v-on:click="goSignUp">아직 회원이 아니신가요? 회원가입</p>
         </form>
+      </div>
     </div>
+    
 </template>
 
 <script setup>
@@ -41,5 +42,54 @@ const goSignUp = function () {
 </script>
 
 <style scoped>
+.login-body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 90vh;
+}
+
+.login-container {
+  width: 500px;
+  padding: 50px;
+  background-color: #F5FAFF;
+  border-radius: 10px;
+  text-align: left;
+}
+
+.login-form {
+  margin-top: 50px;
+  margin-bottom: 20px;
+}
+
+.login-container h1 {
+  color: #333;
+  margin-top: 50px;
+}
+
+.login-container hr {
+  color: #333;
+  margin-bottom: 5px;
+}
+
+.login-container p {
+  color: #333;
+  text-align: center;
+  font-size: 10px;
+  cursor: pointer;
+}
+
+
+.login-btn {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+
+
 
 </style>

@@ -26,7 +26,8 @@ export const useAccountStore = defineStore('account', () => {
                 // formData에서 데이터를 가져올 때 키를 문자열로 명시
                 const username = formdata.get("username");
                 const password = formdata.get("password1")
-                // 로그인을 호출
+                // 새로고침
+                alert('회원가입 완료!')
                 logIn({ username, password })
             })
             .catch((error) => {

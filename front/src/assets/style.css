@@ -12,7 +12,7 @@
   font-family: 'Pretendard';
   src: url('https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Medium.woff') format('woff');
   font-weight: 500; /* Medium */
-  font-style: normal;
+  font-style: normal; 
 }
 
 /* Semi-Bold */
@@ -50,8 +50,8 @@ body {
 /* h1 폰트 크기 */
 h1 {
     font-family: 'Pretendard', sans-serif;
-    font-size: 2rem;  /* 2rem은 32px */
-    font-weight: 700;
+    font-size: 2.25rem;  /* 2rem은 32px */
+    font-weight: 600;
 }
 
 /* h2 폰트 크기 */
@@ -162,12 +162,6 @@ container {
   box-sizing: border-box;
 }
 
-@media (max-width: 768px) {
-  .container {
-    padding: 36px 20px;
-  }
-}
-
 /* btn */
 .btn-lg {
   height:auto;
@@ -180,4 +174,21 @@ container {
   align-items:center;
   font-size: 18px;
   font-weight: 600;
+}
+
+/* input */
+.input-white {
+  width: 100%;
+  margin-bottom: 18px;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 18px;
+  text-indent: 10px;
+}
+
+.input-white::placeholder {
+  color: #cfcfcf;
+  font-size:15px;
+  text-indent: 10px;
 }
