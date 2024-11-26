@@ -82,11 +82,13 @@ const goHome = function () {
 .top-text {
   color: #F5FAFF;
   text-decoration: none;
+  white-space: nowrap; /* 텍스트 줄바꿈 방지 */
 }
 
 .top-text:hover {
   color: #FB4CA1;
   text-decoration: none;
+  white-space: nowrap; /* 텍스트 줄바꿈 방지 */
 }
 
 /* 버튼 속성 지우기 */
@@ -135,6 +137,7 @@ const goHome = function () {
   border-bottom: 10px;
   align-items: center;
   flex: 1;
+  white-space: nowrap; /* 텍스트 줄바꿈 방지 */
 }
 
 .menu-text:hover {
@@ -142,6 +145,7 @@ const goHome = function () {
   text-decoration: none;
   align-items: center;
   flex: 1;
+  white-space: nowrap; /* 텍스트 줄바꿈 방지 */
 }
 
 .menu-text:focus {
@@ -150,5 +154,6 @@ const goHome = function () {
   align-items: center;
   border-bottom: 2px solid #FB4CA1;
   flex: 1;
+  white-space: nowrap; /* 텍스트 줄바꿈 방지 */
 }
 </style>
