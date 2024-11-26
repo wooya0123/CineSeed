@@ -21,3 +21,6 @@ class Movie(models.Model):
     team_introduction = models.TextField(blank=True)
     budget_plan = models.TextField(blank=True)
     is_appliable = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.title

@@ -139,6 +139,7 @@ export const useAccountStore = defineStore('account', () => {
 
               localStorage.removeItem('user-token')     // 로컬 스토리지에서 토큰 제거
               localStorage.removeItem('user-info')      // 로컬 스토리지에서 사용자 정보 제거
+              alert('로그아웃 되었습니다')              // 알림
               router.push({ name: 'home' })             // 홈으로 이동
             })
             .catch((err) => {

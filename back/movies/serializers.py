@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from .models import Movie, Genre
+from accounts.models import ApplyMovie
 from accounts.models import FundMovie
 from django.db.models import Sum
 
@@ -21,11 +22,15 @@ class MovieDetailSerializer(serializers.ModelSerializer):
 
     fund_users = serializers.IntegerField(source='fundmovie_set.count', read_only=True)
     fund_amounts = serializers.SerializerMethodField('get_fund_amounts')
+    apply_users = serializers.SerializerMethodField('get_apply_users')
 
     # obj는 현재 serializer인 Movie 인스턴스
     def get_fund_amounts(self, obj):
         fund_amounts = obj.fundmovie_set.aggregate(Sum('amount'))['amount__sum']
         return fund_amounts if fund_amounts else 0
+    
+    def get_apply_users(self, obj):
+        return ApplyMovie.objects.filter(movie=obj).values_list('user__id', flat=True)
 
     class Meta:
         model = Movie

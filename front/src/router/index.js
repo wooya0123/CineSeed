@@ -55,16 +55,19 @@ const router = createRouter({
       path: '/movies/create',
       name: 'movieCreate',
       component: MovieCreateView,
+      meta: { requiresAuth: true }
     },
     {
       path: '/movies/:id/edit',
       name: 'movieEdit',
       component: MovieEditView,
+      meta: { requiresAuth: true }
     },
     {
       path: '/game',
       name: 'game',
-      component: BaseGameView
+      component: BaseGameView,
+      meta: { requiresAuth: true }
     },
   ]
 })

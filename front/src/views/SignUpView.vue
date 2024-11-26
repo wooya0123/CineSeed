@@ -94,7 +94,7 @@ const signUp = function () {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 105vh;
+  height: 10%;
   padding: 150px;
 }
 
@@ -108,7 +108,7 @@ const signUp = function () {
 
 .signup-container h1 {
   color: #333;
-  margin-top: 50px;
+  margin-top: 20%;
 }
 
 .signup-form {
@@ -131,21 +131,15 @@ const signUp = function () {
   width: 100%;
   margin-bottom: 18px;
   padding: 16px;
-  border: 1px solid #ccc;
+  border: 1px solid #D0D5DA;
   border-radius: 5px;
-  font-size: 15px;
+  font-size: 20px;
 }
 
 .role-dropdown option {
   color: #999999;
   font-size:15px;
 }
-
-.profile-image {
-
-}
-
-
 
 .signup-btn {
   width: 100%;
