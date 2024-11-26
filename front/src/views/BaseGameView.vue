@@ -31,7 +31,6 @@ const startGame = function () {
     height: 100vh;
     /* background-image: url('https://i.pinimg.com/736x/85/4a/a0/854aa031770645b00e9a053f88d24fc9.jpg'); */
     background-image: url('https://i.pinimg.com/736x/09/09/5b/09095bfebec5061afb88cd727a1504d8.jpg');
-    background-size: contain;
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;

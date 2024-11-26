@@ -5,7 +5,7 @@
     </header>
     
     <section>
-      <h2>인기 있는 펀딩</h2>
+      <h3>인기 있는 펀딩</h3>
       <MovieCarousel :movies="home.popularMovies"/>
     </section>
 
@@ -13,7 +13,7 @@
     <section v-if="account.isLogIn">
       <!-- 취향 토너먼트 게임 진행 완료 시 -->
       <div v-if="account.user.title">
-        <h2>{{ account.user.nickname }}님 취향과 비슷한 펀딩</h2>
+        <h3>{{ account.user.nickname }}님 취향과 비슷한 펀딩</h3>
         <MovieCarousel :movies="home.personalizedMovies"/>
       </div>
     </section>
@@ -41,5 +41,7 @@ onMounted(() => {
 </script>
 
 <style scoped>
-
+section {
+  padding: 32px 8px;
+}
 </style>

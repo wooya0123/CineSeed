@@ -14,6 +14,9 @@
           회원가입
         </RouterLink>
       </span>
+      <span class="gray2" v-if="account.isLogIn && account.user">
+        {{ account.user.nickname }}님의 잔액 : {{ account.user.cash }}원
+      </span>
       <span v-if="account.isLogIn && account.user">
         <RouterLink :to="{ name : 'profile', params: { id: account.user.id }}" class="top-text nav-text:hover">
           마이페이지

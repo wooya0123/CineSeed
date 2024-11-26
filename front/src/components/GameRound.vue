@@ -47,10 +47,12 @@
             </div>
         </div>
 
-        <div v-if="movies && movieIndex >= movies.length">
-            <h2>취향 분석이 완료되었습니다.</h2>
-            <h3>{{ userTitle }}</h3>
-            <p @click="goHome">홈으로 가서 내 취향 맞춤 펀딩 둘러보기</p>
+        <div class="information bg-white gray6" v-if="movies && movieIndex >= movies.length">
+            <div>
+                <h2 class="primary">취향 분석이 완료되었습니다.</h2>
+                <h3>[{{ userTitle }}]</h3>
+            </div>
+            <p class="move" @click="goHome">홈으로 가서 내 취향 맞춤 펀딩 둘러보기</p>
         </div>
     </div>
 </template>
@@ -388,4 +390,21 @@ const goHome = function () {
   100% { transform: translate(-50%, -50%) rotate(360deg); }
 }
 
+.information {
+    width: 100%;
+    min-width: 400px;
+    height: 200px;
+    border-radius: 20px;
+    text-align: center;
+    display: flex;
+    flex-direction: column; /* 세로 방향 배치 */
+    align-items: center;    /* 가로 방향 정렬 */
+    justify-content: space-between; /* 상단과 하단으로 분리 */
+    padding: 30px 0; /* 위아래 여백 추가 */
+}
+
+.move {
+    cursor: pointer;
+    margin-top: auto; /* 위 요소와 아래 요소 간 간격 확보 */
+}
 </style>
