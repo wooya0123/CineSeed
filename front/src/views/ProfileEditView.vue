@@ -1,159 +1,252 @@
 <template>
-    <input type="text" v-show="!introduction" class="gray2">아직 등록된 자기소개가 없어요!</input>
-  </template>
+    <div class="container">
+        <h2>프로필 수정</h2>
+        
+        <div class="introduction">
+            <!-- 프로필 이미지 수정 -->
+            <div class="introduction-image bg-gray5">
+                <div class="image-wrapper">
+                    <img class="user_image" :src="profileImagePreview || image" alt="프로필이미지" />
+                    <!-- 이미지 바꾸기 버튼 -->
+                    <label for="profileImage" class="btn-m bg-primary">이미지 바꾸기</label>
+                    <input type="file" id="profileImage" class="file-input" @change="handleImageUpload" />
+                </div>
+            </div>
+
+            <!-- 프로필 정보 수정 -->
+             <div class="introduction-body">
+                 <div class="introduction-form bg-gray5">
+                     <!-- 닉네임 -->
+                     <div class="form-group">
+                         <label for="nickname">닉네임</label>
+                         <input
+                         type="text"
+                         id="nickname"
+                         v-model="form.nickname"
+                         placeholder="닉네임을 입력하세요"
+                         class="input-white"
+                         />
+                     </div>
+     
+                     <!-- 자기소개 -->
+                     <div class="form-group">
+                         <label for="introduction">자기소개</label>
+                         <textarea
+                             id="introduction"
+                             v-model="form.introduction"
+                             placeholder="자기소개를 입력하세요"
+                             class="input-white"
+                             style="height: 500px;"
+                         ></textarea>
+                     </div>
+                     
+                     <!-- 인스타그램 -->
+                     <div class="form-group">
+                         <label for="instagram">인스타그램</label>
+                         <input
+                             type="text"
+                             id="instagram"
+                             v-model="form.instagram"
+                             placeholder="인스타그램 링크를 입력하세요"
+                             class="input-white"
+                         />
+                     </div>
+                     
+                     <!-- 연락처 -->
+                     <div class="form-group">
+                         <label for="etc">연락처</label>
+                         <input
+                             type="text"
+                             id="etc"
+                             v-model="form.etc"
+                             placeholder="메일 또는 URL"
+                             class="input-white"
+                         />
+                     </div>
+                 </div>
+                 <!-- 저장 및 취소 버튼 -->
+                 <div class="form-actions">
+                 <button class="btn-lg bg-primary" @click="updateProfile">저장</button>
+                 <button class="btn-lg bg-gray5" @click="cancelEdit">취소</button>
+                 </div>
+             </div>
+        </div>
+
+    </div>
+</template>
   
-  <script setup>
-  import MovieCarousel from '@/components/MovieCarousel.vue';
   
-  import { useAccountStore } from '@/stores/account';
-  import axios from 'axios';
-  import { onMounted, ref, watch } from 'vue';
-  import { useRouter, useRoute } from 'vue-router/dist/vue-router';
   
-  const router = useRouter()
-  const playGame = function () {
-    router.push({name : 'game'})
+<script setup>
+import { ref } from 'vue';
+import { useRouter } from 'vue-router';
+import axios from 'axios';
+import { useAccountStore } from '@/stores/account';
+
+const router = useRouter();
+const account = useAccountStore();
+
+// API 경로 및 현재 사용자 ID
+const profileAPI = `${account.API_URL}/api/v1/profile/update/`;
+const profileOwnerId = account.user.id;
+
+// Form 상태 관리
+const form = ref({
+  nickname: account.user.nickname || '',
+  introduction: account.user.introduction || '',
+  instagram: account.user.instagram || '',
+  etc: account.user.etc || '',
+});
+
+// 이미지 관리
+const image = ref(`${account.API_URL}${account.user.profile_image}` || `${account.API_URL}/media/profile_images/default_profile.png`);
+const profileImage = ref(null);
+const profileImagePreview = ref('');
+
+const handleImageUpload = (event) => {
+    if (event.target.files.length > 0) {
+        profileImage.value = event.target.files[0] // 선택한 파일을 설정
+    } else {
+        profileImage.value = null // 파일이 없으면 null로 초기화
+    }
+}
+
+// 프로필 업데이트
+const updateProfile = function () {
+  const formData = new FormData()
+
+  formData.append('nickname', form.value.nickname);
+  formData.append('introduction', form.value.introduction);
+  formData.append('instagram', form.value.instagram);
+  formData.append('etc', form.value.etc);
+
+  if (profileImage.value) {
+    formData.append('profile_image', profileImage.value);
   }
-  
-  const route = useRoute()
-  const account = useAccountStore()
-  const profileOwnerId = ref(route.params.id)
-  const profileOwner = ref(null)
-  
-  const nickname = ref(null)
-  
-  // 연락처 아이콘 클릭하면 클립보드에 복사
-  const copyToClipboard = (text) => {
-    navigator.clipboard.writeText(text).then(() => {
-      alert('클립보드에 복사되었습니다.')
-    }).catch((err) => {
-      console.error('클립보드 복사 실패:', err)
-    })
-  }
-  
-  const image = ref(null)
-  const introduction = ref(true)
-  const profileAPI = account.API_URL + '/api/v1/profile/' // 프로필 데이터 가져올 주소
-  
-  onMounted(() => {
-    // 이 프로필 주인 찾기
-    axios({
-      method: 'get',
-      url: `${profileAPI}${profileOwnerId.value}/`,
-      headers: {
-        'Authorization': `Token ${account.token}`,
-      },
-    })
-      .then((res) => {
-        profileOwner.value = res.data
-        console.log(profileOwner.value);
-      })
-      .catch((err) => {
-        console.log('프로필 불러오기 실패', err)
-      })
+
+  axios({
+    method: 'put',
+    url: `${account.API_URL}/api/v1/profile/${account.user.id}/`,
+    data: formData,
+    headers: {
+      'Authorization': `Token ${account.token}`,
+      'Content-Type': 'multipart/form-data',
+    }
   })
-  
-  watch(profileOwner,
-    (newVal) => {
-      // 등록된 이미지가 없다면 기본 이미지 보여주기
-      if (!profileOwner.value.profile_image) {
-            image.value = account.API_URL + '/media/profile_images/default_profile.png'
-      } else {
-        image.value = account.API_URL + profileOwner.value.profile_image
-      }
-  
-      // 자기소개가 있는지 체크
-      if (!profileOwner.value.introduction) {
-        introduction.value = false
-      } else {
-        introduction.value = true
-      }
-  
-      // 닉네임 칭호 붙일지 말지 체크
-      if (profileOwner.value.role != '미정') {
-        nickname.value = profileOwner.value.nickname + ' ' + profileOwner.value.role
-      } else {
-        nickname.value = profileOwner.value.nickname
-      }
-  })
-  
-  const goEditProfile = function () {
-    router.push({ name : 'profileEdit' })
-  }
-  </script>
-  
-  <style scoped>
-  .introduction {
-    display: flex;
-    flex-direction: row;
-    gap: 24px;
-  }
-  
-  .introduction-image {
-    width: 30%;
-    height: fit-content;
-    display: flex;
-    flex-direction: column;
-    border-bottom-right-radius: 20px;
-    border-bottom-left-radius: 20px;
-  }
-  
-  .introduction-title {
-    display: flex;
-    flex-direction: row;
-  }
-  
-  .user_image {
-    border-top-left-radius: 20px;
-    border-top-right-radius: 20px;
+    .then((res)=> {
+        alert('프로필이 성공적으로 수정되었습니다.')
+        router.push({ name: 'home' })
+    })
+    .catch ((error) => {
+        console.error('프로필 수정 실패:', error);
+        alert('프로필 수정 중 오류가 발생했습니다.');
+    })
+};
+
+// 취소 버튼
+const cancelEdit = () => {
+  router.push({ name: 'profileView', params: { id: profileOwnerId } });
+};
+</script>
+
+<style scoped>
+.introduction {
+  display: flex;
+  flex-direction: row;
+  gap: 24px;
+  align-items: flex-start;
+}
+
+.introduction-image {
+  width: 30%;
+  height: 30%;
+  display: flex;
+  flex-direction: column;
+  border-bottom-right-radius: 20px;
+  border-bottom-left-radius: 20px;
+    overflow: hidden;
+}
+
+.image-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.user_image {
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.file-input {
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  width: 100%;
+  height: 300px;
+  cursor: pointer;
+}
+
+.introduction-body {
     width: 100%;
-  }
-  
-  .title {
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    align-content: center;
-    text-align: center;
-  }
-  
-  .introduction-body {
-    display: flex;
-    flex-direction: column;
-    padding: 24px 32px;
-    width: 100%;
-    border-radius: 20px;
-  }
-  
-  
-  .movie_poster {
-    width: 30%;
-  }
-  
-  .movie-carousel {
-    margin-top: 32px;
-  }
-  
-  .info {
-    margin-top: 16px;
-    height: 160px;
-    border-radius: 16px;
-    padding: 16px;
-  }
-  
-  .introduction-title-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  
-  .edit-btn {
-    color: #9BA0A5;
-    text-decoration-line: underline;
-  }
-  
-  .edit-btn:hover {
-    color: #FB4CA1;
-    cursor: pointer;
-  }
-  </style>
+}
+
+.introduction-form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  border-radius: 20px;
+  padding: 24px;
+}
+
+.form-group {
+  margin-bottom: 16px;
+}
+
+label {
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+
+input,
+textarea {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  margin-top: 4px;
+}
+
+textarea {
+  resize: none;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 16px;
+  margin-top: 20px;
+}
+
+.btn-primary {
+  background-color: #007bff;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.btn-secondary {
+  background-color: #6c757d;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+</style>
