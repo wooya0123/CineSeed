@@ -5,7 +5,7 @@
     </header>
     
     <section>
-      <h2>인기 있는 펀딩</h2>
+      <h3>인기 있는 펀딩</h3>
       <MovieCarousel :movies="home.popularMovies"/>
     </section>
 
@@ -40,5 +40,7 @@ onMounted(() => {
 </script>
 
 <style scoped>
-
+section {
+  padding: 32px 8px;
+}
 </style>
