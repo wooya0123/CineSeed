@@ -4,7 +4,7 @@
 - [프로젝트 개요](#프로젝트-개요)
 - [주요 기능](#주요-기능)
 - [주요 기술](#주요-기술)
-- [트러블 슈팅](#트러블-슈팅)
+- [이슈 사항](#이슈-사항)
 - [프로젝트 산출물](#프로젝트-산출물)
 - [기타(느낀 점, 후기 등)](#기타느낀-점-후기-등)
 
@@ -54,26 +54,23 @@ CineSeed는 영화 산업의 회복을 위해 새로운 감독들이 양질의 �
 
 ## 서비스 화면
 ### 영화 등록 및 조회
-- 영화 등록하기
-<br>
 <img src="https://github.com/user-attachments/assets/04d0dcf4-edec-4270-9fab-c34a2635be3f" alt="영화 등록하기" width="500" />
-<br>
-- 영화 목록
+
 <br>
 <img src="https://github.com/user-attachments/assets/08d3a1b1-03ee-4c8a-b96e-c38bf5546f39" alt="영화 목록" width="500" />
-<br>
-- 마이페이지
+
+<b>마이페이지</b>
 <br>
 <img src="https://github.com/user-attachments/assets/f2205384-e841-4962-a24f-751148f5720d" alt="마이페이지" width="500" />
 
 ### 펀딩 및 크루로 지원
-- 영화 상세페이지
+<b>영화 상세페이지</b>
 <br>
 <img src="https://github.com/user-attachments/assets/ed6ae099-a89e-4175-9f66-fe0fd7bfd0fd" alt="영화 상세페이지" width="500" />
 
 ### 영화 취향 토너먼트 게임
-<br>
-|<img src="https://github.com/user-attachments/assets/78679394-2d54-4027-a339-cf012d33b33d" alt="영화 취향 게임 이미지 1" width="400" />|<img src="https://github.com/user-attachments/assets/86dd9a3b-7d3e-4c00-91ea-2191b83d3687" alt="영화 취향 게임 이미지 1" width="400" />
+|<img src="https://github.com/user-attachments/assets/78679394-2d54-4027-a339-cf012d33b33d" alt="영화 취향 게임 이미지 1" width="400" /> | <img src="https://github.com/user-attachments/assets/86dd9a3b-7d3e-4c00-91ea-2191b83d3687" alt="영화 취향 게임 이미지 2" width="400" />|
+|---|---|
 
 # 주요 기술
 <b>FrontEnd</b>
@@ -90,9 +87,28 @@ CineSeed는 영화 산업의 회복을 위해 새로운 감독들이 양질의 �
 - 커뮤니케이션: Notion
 - 디자인: Figma
 
-# 트러블 슈팅
+# 이슈 사항
 ### ERD 설계
+#### ERD1
+모든 것을 M:N 관계로 엮은 후 참조/역참조 매니저를 통해 데이터를 조회 <br>
+--> 데이터를 조회하기 위해 너무 많은 단계를 거쳐서 비효율적이라고 판단
 
+#### ERD2
+필요 없다고 생각되는 관계를 모두 삭제하여 ERD 단순화 <br>
+--> 필요한 데이터를 조회할 수 없는 상황 발생
+
+#### ERD3
+이전으로 되돌려 필요한 데이터를 모두 조회할 수 있게 M:N 관계 설정 <br>
+누락된 게임 관련 데이터 테이블 추가 <br>
+--> 장르 테이블에서 데이터를 조회한 후 출력할 때 복잡함 이슈 발생
+
+#### ERD 최종
+가장 문제였던 장르 데이터를 가공하여 테이블 생성 (여러 형태로 기록되던 데이터를 하나의 기준으로 통합)
+
+|<img src="https://github.com/user-attachments/assets/4a7a0998-1b1a-40ed-9f0b-32cf695a0588" alt="ERD 1" width="250" height="100"/> <br> ERD 1|<img src="https://github.com/user-attachments/assets/c4b6c196-0e0b-4c5c-856c-dd6ded19df4d" alt="ERD 1" width="250" height="100"/> <br> ERD 2|<img src="https://github.com/user-attachments/assets/c4196448-d253-408b-92ca-f8450bae39f4" alt="ERD 1" width="250" height="100"/> <br> ERD 3|
+|---|---|---|
+
+<img src="https://github.com/user-attachments/assets/4a7a0998-1b1a-40ed-9f0b-32cf695a0588" alt="ERD 1"/><br> <b>ERD 최종</b>
 
 # 프로젝트 산출물
 
