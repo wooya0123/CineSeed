@@ -55,20 +55,20 @@ CineSeed는 영화 산업의 회복을 위해 새로운 감독들이 양질의 �
 ## 서비스 화면
 ### 영화 등록 및 조회
 - 영화 등록하기
-<br> <br>
+<br>
 <img src="https://github.com/user-attachments/assets/04d0dcf4-edec-4270-9fab-c34a2635be3f" alt="영화 등록하기" width="500" />
-
+<br>
 - 영화 목록
-<br> <br>
+<br>
 <img src="https://github.com/user-attachments/assets/08d3a1b1-03ee-4c8a-b96e-c38bf5546f39" alt="영화 목록" width="500" />
-
+<br>
 - 마이페이지
-<br> <br>
+<br>
 <img src="https://github.com/user-attachments/assets/f2205384-e841-4962-a24f-751148f5720d" alt="마이페이지" width="500" />
 
 ### 펀딩 및 크루로 지원
 - 영화 상세페이지
-<br> <br>
+<br>
 <img src="https://github.com/user-attachments/assets/ed6ae099-a89e-4175-9f66-fe0fd7bfd0fd" alt="영화 상세페이지" width="500" />
 
 ### 영화 취향 토너먼트 게임
