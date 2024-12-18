@@ -40,7 +40,7 @@ CineSeed는 영화 산업의 회복을 위해 새로운 감독들이 양질의 �
 # 주요 기능
 ### 1. 영화 등록 및 조회
 - 감독으로 가입한 유저는 자신의 영화를 펀딩 등록할 수 있습니다.
-- 유저는 자신이 좋아하는 영화, 펀딩한 영화, 크루로 지원한 영화를 모아서 볼 수 있습니다.
+- 유저는 펀딩 등록된 영화를 조회할 수 있고 자신이 좋아하는 영화, 펀딩한 영화, 크루로 지원한 영화를 마이페이지에서 모아서 볼 수 있습니다.
 
 ### 2. 펀딩
 - 유저는 갖고 있는 금액 내에서 펀딩 등록된 영화에 원하는 금액만큼 펀딩할 수 있습니다.
@@ -54,8 +54,21 @@ CineSeed는 영화 산업의 회복을 위해 새로운 감독들이 양질의 �
 
 ## 서비스 화면
 ### 영화 등록 및 조회
-![영화 등록](https://github.com/user-attachments/assets/7c6c8a70-673b-4997-9832-49f044949f04)
+- 영화 등록하기 <hr>
+<img src="https://github.com/user-attachments/assets/04d0dcf4-edec-4270-9fab-c34a2635be3f" alt="영화 등록하기" width="500" />
 
+- 영화 목록 <hr>
+<img src="https://github.com/user-attachments/assets/08d3a1b1-03ee-4c8a-b96e-c38bf5546f39" alt="영화 목록" width="500" />
+
+- 마이페이지 <br>
+<img src="https://github.com/user-attachments/assets/f2205384-e841-4962-a24f-751148f5720d" alt="마이페이지" width="500" />
+
+### 펀딩 및 크루로 지원
+- 영화 상세페이지 <hr>
+<img src="https://github.com/user-attachments/assets/ed6ae099-a89e-4175-9f66-fe0fd7bfd0fd" alt="영화 상세페이지" width="500" />
+
+### 영화 취향 토너먼트 게임
+|<img src="https://github.com/user-attachments/assets/78679394-2d54-4027-a339-cf012d33b33d" alt="영화 취향 게임 이미지 1" width="400" />|<img src="https://github.com/user-attachments/assets/86dd9a3b-7d3e-4c00-91ea-2191b83d3687" alt="영화 취향 게임 이미지 1" width="400" />
 
 # 주요 기술
 <b>FrontEnd</b>
